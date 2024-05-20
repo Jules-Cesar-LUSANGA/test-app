@@ -1,10 +1,12 @@
 # SoftDay Project
 
-Ce projet a été créé pour le concours SoftDay. Il s'agit d'une application web qui permet la gestion CRUD (Création, Lecture, Mise à jour, Suppression) des examens.
+Ce projet a été créé pour le concours SoftDay. Il s'agit d'une application web qui permet la gestion CRUD (Création, Lecture, Mise à jour, Suppression) des evaluations.
 
 ## Fonctionnalités
 
-- **Gestion des examens** : Les utilisateurs peuvent créer, lire, mettre à jour et supprimer des examens.
+- **Gestion des evaluations** : Les utilisateurs peuvent créer, lire, mettre à jour et supprimer des evaluations.
+- **Ajouts des questions** : Les utilisateurs peuvent créer, lire, mettre à jour et supprimer des questions.
+    - **Ajouts des assertions** : Une question à choix multiple peux avoir plusieurs assertions.
 
 ## Installation
 
