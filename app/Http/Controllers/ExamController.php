@@ -32,8 +32,11 @@ class ExamController extends Controller
      */
     public function store(CreateExamRequest $request)
     {
+        $data = $request->validated();
+        $data['code'] = $this->generateCode();
+
         // Create a new exam
-        $exam = auth()->user()->exams()->create($request->validated());
+        $exam = auth()->user()->exams()->create($data);
 
         return redirect()->route('exams.show', compact('exam'))
                         ->with('success', 'Exam created successfully');
@@ -48,6 +51,21 @@ class ExamController extends Controller
         // $exam->load('questions');
 
         return view('exams.show', compact('exam'));
+    }
+
+    public function showWithCode(Request $request)
+    {
+        $request->validate([
+            'code' => 'required'
+        ]);
+
+        $exam = Exam::where('code', $request->code)->first();
+
+        if ($exam == null) {
+            return redirect()->back()->with('error', 'Evaluation code invalid');
+        }
+
+        return redirect()->route('exams.show', $exam->id);
     }
 
     /**
@@ -80,5 +98,17 @@ class ExamController extends Controller
 
         return redirect()->route('exams.index')
                         ->with('success', 'Exam deleted successfully');
+    }
+
+
+    public function generateCode()
+    {
+        $code = \Str::random(10);
+
+        if (Exam::where('code', $code)->exists()) {
+            return $this->generateCode();
+        }
+
+        return $code;
     }
 }

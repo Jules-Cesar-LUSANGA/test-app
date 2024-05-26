@@ -13,6 +13,7 @@ class Exam extends Model
         'course_name',
         'description',
         'duration',
+        'code',
     ];
 
     public function questions()

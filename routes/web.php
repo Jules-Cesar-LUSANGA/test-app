@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
 
     Route::resource('exams', ExamController::class);
+    Route::post('/exams/show/with-code', [ExamController::class, 'showWithCode'])->name('exams.show-with-code');
 
     // Create questions resource
     Route::resource('questions', QuestionController::class)->only(['edit','destroy', 'update']);
@@ -24,7 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/questions/{exam}/createQCM', [QuestionController::class, 'storeQcm'])->name('questions.storeQcm');
 
     Route::post('/assertion/{assertion}/setAnswer', [AssertionController::class, 'IsAnswer'])->name('assertion.IsAnswer');
-
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

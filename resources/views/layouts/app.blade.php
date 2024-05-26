@@ -13,6 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <x-import-scripts></x-import-scripts>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -29,6 +31,13 @@
 
             <!-- Page Content -->
             <main>
+
+                @session('error')
+                    <div class="my-3 font-bold text-red-500">
+                        {{ session('error') }}
+                    </div>
+                @endsession
+
                 {{ $slot }}
             </main>
         </div>

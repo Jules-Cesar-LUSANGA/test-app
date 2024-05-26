@@ -38,9 +38,13 @@ class QuestionController extends Controller
 
         // Create all assertions
         foreach ($request->assertions as $assertion) {
-            $question->assertions()->create([
-                'content' => $assertion
-            ]);
+
+            // An assertion can't be null
+            if ($assertion != null) {
+                $question->assertions()->create([
+                    'content' => $assertion
+                ]);
+            }            
         }
 
         return redirect()->back()->with('success', 'Question created successfully.');

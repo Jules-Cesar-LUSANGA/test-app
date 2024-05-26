@@ -6,6 +6,7 @@
 /storage/*.key
 /vendor
 /uml
+.todo.md
 .env
 .env.backup
 .env.production

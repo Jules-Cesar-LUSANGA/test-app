@@ -12,6 +12,27 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+
+            @student
+                
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-3">
+                    <div class="p-6 text-gray-900">
+                        <form action="{{ route('exams.show-with-code') }}" method="post" class="flex items-center justify-between">
+                            @csrf
+
+                            <div class="w-3/4">
+                                <x-input-label for="code" :value="__('Course name')" />
+                                <x-text-input id="code" class="block w-full mt-1" type="text" name="code" :value="old('code')" required autofocus autocomplete="code" />
+                                <x-input-error :messages="$errors->get('code')" class="mt-2" />
+                            </div>
+
+                            <x-primary-button>Accéder à l'évaluation</x-primary-button>
+                        </form>
+                    </div>
+                </div>
+
+            @endstudent
+
         </div>
     </div>
 </x-app-layout>
