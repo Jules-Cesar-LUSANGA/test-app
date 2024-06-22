@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/responses/{exam}/set', [ResponseController::class, 'set'])->name('exams.responses.set');
     Route::get('/submitions/{exam}/get', [SubmitionController::class, 'get'])->name('exams.submittions.get');
     Route::get('/submitions/{presentation}/show', [SubmitionController::class, 'show'])->name('exams.submittions.show');
+    Route::post('/submitions/{presentation}/setPoints', [SubmitionController::class, 'setPoints'])->name('exams.submittions.set-points');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

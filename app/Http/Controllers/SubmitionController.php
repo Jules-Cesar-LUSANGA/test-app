@@ -25,4 +25,25 @@ class SubmitionController extends Controller
         
         return view('exams.submitions.show', compact('presentation', 'exam', 'student', 'responses'));
     }
+
+    public function setPoints(Presentation $presentation, Request $request)
+    {
+        $request->validate([
+            'points' => ['required', 'array'],
+        ]);
+
+        // Récupérer toutes les réponses pour ajouter les côtes
+        $i = 0;
+
+        foreach ($presentation->responses as $response) {
+            $response->update([
+                'points'    => $request->points[$i]
+            ]);
+            $i++;
+        }
+
+        dump($presentation->responses);
+
+        dd($request->all());
+    }
 }

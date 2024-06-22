@@ -17,6 +17,7 @@ class Response extends Model
         'question_id',
         'assertion_id',
         'content',
+        'points',
     ];
 
     /**

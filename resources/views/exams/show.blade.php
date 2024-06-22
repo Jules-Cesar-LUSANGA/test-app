@@ -65,11 +65,11 @@
                             @csrf
                             <h1 class="text-2xl font-semibold">Questions</h1>
 
-                            <div class="mt-4">
+                            <div class="my-4">
                                 @foreach ($exam->questions as $question)
-                                    <div class="pl-0 p-4">
+                                    <div class="pl-0 px-4">
                                         <div class="flex justify-between">
-                                            <h2 class="text-lg font-semibold">{{ $loop->iteration . '. ' . $question->content }}</h2>
+                                            <h2 class="text-lg font-semibold">{{ "{$loop->iteration}.  {$question->content} ({$question->points} pts)" }}</h2>
                             
                                             @teacher
                                                 <div class="flex items-center">
@@ -84,9 +84,9 @@
                                         </div>
                                         <div class="mt-2">
                                             @if ($question->qcm == true)
-                                                <ul>
+                                                <ul class="pl-4">
                                                     @foreach ($question->assertions as $assertion)
-                                                        <li class="flex items-center justify-between mt-2">
+                                                        <li class="flex items-center justify-between mt-1">
                                                             <div>
                                                                 @student
                                                                     <input type="checkbox" name="question{{ $question->id }}-assertion-{{ $assertion->id }}" class="mr-2">
@@ -125,40 +125,5 @@
         </div>
 
     </div>
-
-<script>
-    const addAssertion = document.getElementById("addAssertion")
-const assertions = document.getElementById('assertions')
-
-addAssertion.addEventListener('click', function(){
-    const li = document.createElement('li');
-    li.setAttribute('class', 'mb-3 flex justify-between items-center')
-
-    const assertionInput = document.createElement('input');
-
-    assertionInput.setAttribute('name', 'assertions[]');
-    assertionInput.setAttribute('type', 'text');
-    assertionInput.setAttribute('placeholder', 'Type assertion content');
-    assertionInput.setAttribute('class', 'w-11/12');
-
-    li.appendChild(assertionInput)
-
-    assertions.appendChild(li)
-});
-
-
-const contentQCM = document.getElementById('contentQCM')
-
-contentQCM.addEventListener('keyup', function()
-{
-    if (contentQCM.value.length > 5) {
-        addAssertion.classList.remove('hidden')
-        document.getElementById('createQCM-Button').classList.remove('hidden');
-    } else {
-        addAssertion.classList.add('hidden')
-        document.getElementById('createQCM-Button').classList.add('hidden');
-    }
-})
-</script>
 
 </x-app-layout>

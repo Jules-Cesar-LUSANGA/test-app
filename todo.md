@@ -1,3 +1,3 @@
 *Un étudiant peut être autorisé à refaire une évaluation
-*Chaque question a une côte particulière (pour permettre de côté directement les questions à choix multiples)
+*Côter directement les questions à choix multiples, même pour ceux dont les assertions sont multiples
 

@@ -19,6 +19,7 @@ class QuestionController extends Controller
         $exam->questions()->create(
             [
                 'content'   => $request->content,
+                'points'    => $request->points,
                 'qcm'       => false
             ]
         );
@@ -32,6 +33,7 @@ class QuestionController extends Controller
         $question = $exam->questions()->create(
             [
                 'content'   => $request->content,
+                'points'    => $request->points,
                 'qcm'       => true
             ]
         );

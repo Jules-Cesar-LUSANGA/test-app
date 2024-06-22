@@ -26,13 +26,13 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                     <div>
-                        <form action="{{ route('exams.responses.set', $exam) }}" method="POST">
+                        <form action="{{ route('exams.submittions.set-points', $presentation) }}" method="POST">
                             @csrf
                             <h1 class="text-2xl font-semibold">Reponses</h1>
 
-                            <div class="mt-4">
+                            <div class="my-4">
                                 @foreach ($responses as $response)
-                                    <div class="pl-0 p-4">
+                                    <div class="pl-0 p-2">
                                         <div class="flex justify-between">
                                             <h2 class="text-lg font-semibold">{{ $loop->iteration . '. ' . $response->question->content }}</h2>
                                         </div>
@@ -58,9 +58,17 @@
                                                 </p>
                                             @endif
                                         </div>
+                                        
+                                        <div class="mts-4">
+                                            <x-input-label for="points{{ $response->question->id }}" :value="__('Points')" />
+                                            <x-text-input id="points{{ $response->question->id }}" class="block mt-1" type="text" min="0" name="points[]" :value="old('points', $response->points)" required autofocus autocomplete="duration" />
+                                            <x-input-error :messages="$errors->get('points')" class="mt-2" />
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
+
+                            <x-primary-button>Enregistrer la côte</x-primary-button>
                             
                         </form>
 

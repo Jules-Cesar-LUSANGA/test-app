@@ -23,6 +23,7 @@ class StoreQuestionRequest extends FormRequest
     {
         return [
             'content' => 'required|string',
+            'points'  => 'required|numeric',
         ];
     }
 }
