@@ -1,3 +1,3 @@
 @if (request()->routeIs('exams.show'))
-    @vite(['resources/js/evaluations.js'])
+    <script src="{{ asset("js/evaluations.js") }}"></script>
 @endif

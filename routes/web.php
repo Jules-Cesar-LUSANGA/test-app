@@ -4,6 +4,8 @@ use App\Http\Controllers\AssertionController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResponseController;
+use App\Http\Controllers\SubmitionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,6 +28,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/assertion/{assertion}/setAnswer', [AssertionController::class, 'IsAnswer'])->name('assertion.IsAnswer');
 
+    Route::post('/responses/{exam}/set', [ResponseController::class, 'set'])->name('exams.responses.set');
+    Route::get('/submitions/{exam}/get', [SubmitionController::class, 'get'])->name('exams.submittions.get');
+    Route::get('/submitions/{presentation}/show', [SubmitionController::class, 'show'])->name('exams.submittions.show');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

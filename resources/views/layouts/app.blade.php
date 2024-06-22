@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'TestAPP') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -33,8 +33,14 @@
             <main>
 
                 @session('error')
-                    <div class="my-3 font-bold text-red-500">
+                    <div class="my-3 font-bold text-red-500 p-4">
                         {{ session('error') }}
+                    </div>
+                @endsession
+
+                @session('success')
+                    <div class="my-3 font-bold text-blue-500 p-4">
+                        {{ session('success') }}
                     </div>
                 @endsession
 

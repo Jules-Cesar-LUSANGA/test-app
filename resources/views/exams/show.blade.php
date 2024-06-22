@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Exam of {{ $exam->course_name }}
+            {{ $exam->course_name }}
         </h2>
     </x-slot>
 
@@ -11,8 +11,8 @@
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                     <div>
                         <div class="flex justify-between">
-                            <h1 class="text-2xl font-semibold">{{ $exam->course_name }}</h1>
-                            <p class="text-gray-500">Duration: {{ $exam->duration }} minutes</p>
+                            <h1 class="text-2xl font-semibold">{{ $exam->course_name . " (" . $exam->code . ")" }}</h1>
+                            <p class="text-gray-500">Durée : {{ $exam->duration }} minutes</p>
                         </div>
                         <div>
                             <p class="text-gray-500">{{ $exam->description }}</p>
@@ -24,7 +24,10 @@
 
         
         @teacher()
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4 flex items-center justify-between">
+                
+                <a href="{{ route('exams.submittions.get', $exam) }}" class="text-white font-bold border px-2 py-1 rounded-lg bg-cyan-800">Soumissions</a>
+
                 <div class="flex justify-end">
                     
                     <x-primary-button 
@@ -32,33 +35,33 @@
                         x-on:click.prevent="$dispatch('open-modal', 'add_qcm_question')"
                         class="mx-2"
                     >
-                        Add Multiple Choice Question
+                        Ajouter une question QCM
                     </x-primary-button>
 
                     <x-primary-button
                         x-data=""
                         x-on:click.prevent="$dispatch('open-modal', 'add_question')"
                     >
-                        Add Simple Question
+                        Ajouter une simple question
                     </x-primary-button>
 
                 </div>
             </div>
 
+            {{-- Add modals --}}
+            <x-questions.modals.qcm-question :exam="$exam"/>
+            <x-questions.modals.simple-question :exam="$exam"/>
+
         @endteacher
 
 
-        {{-- Add modals --}}
-        <x-questions.modals.qcm-question :exam="$exam"/>
-        <x-questions.modals.simple-question :exam="$exam"/>
-
-        {{-- Show created questions --}}
+        {{-- Show questions --}}
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
                     <div>
-                        <form action="" method="POST">
+                        <form action="{{ route('exams.responses.set', $exam) }}" method="POST">
                             @csrf
                             <h1 class="text-2xl font-semibold">Questions</h1>
 
@@ -86,7 +89,7 @@
                                                         <li class="flex items-center justify-between mt-2">
                                                             <div>
                                                                 @student
-                                                                    <input type="checkbox" name="assertion" class="mr-2">
+                                                                    <input type="checkbox" name="question{{ $question->id }}-assertion-{{ $assertion->id }}" class="mr-2">
                                                                 @endstudent
                                                                 <label for="assertion" @class(['font-bold text-blue-500' => $assertion->isAnswer == true and (auth()->user()->role_id == 2)])>{{ $assertion->content }}</label>
                                                             </div>
@@ -101,7 +104,7 @@
                                                 </ul>
                                             @else
                                                 @student
-                                                    <input type="text" name="question{{ $question->id }}" class="w-full border border-gray-200 p-2" placeholder="Answer">
+                                                    <input type="text" required name="question{{ $question->id }}" class="w-full border border-gray-200 p-2" placeholder="Answer">
                                                 @endstudent
                                             @endif
                         
@@ -111,7 +114,7 @@
                             </div>
                             
                             @student
-                                <x-primary-button>Submit</x-primary-button>
+                                <x-primary-button>Soumettre</x-primary-button>
                             @endstudent
                             
                         </form>
@@ -122,5 +125,40 @@
         </div>
 
     </div>
+
+<script>
+    const addAssertion = document.getElementById("addAssertion")
+const assertions = document.getElementById('assertions')
+
+addAssertion.addEventListener('click', function(){
+    const li = document.createElement('li');
+    li.setAttribute('class', 'mb-3 flex justify-between items-center')
+
+    const assertionInput = document.createElement('input');
+
+    assertionInput.setAttribute('name', 'assertions[]');
+    assertionInput.setAttribute('type', 'text');
+    assertionInput.setAttribute('placeholder', 'Type assertion content');
+    assertionInput.setAttribute('class', 'w-11/12');
+
+    li.appendChild(assertionInput)
+
+    assertions.appendChild(li)
+});
+
+
+const contentQCM = document.getElementById('contentQCM')
+
+contentQCM.addEventListener('keyup', function()
+{
+    if (contentQCM.value.length > 5) {
+        addAssertion.classList.remove('hidden')
+        document.getElementById('createQCM-Button').classList.remove('hidden');
+    } else {
+        addAssertion.classList.add('hidden')
+        document.getElementById('createQCM-Button').classList.add('hidden');
+    }
+})
+</script>
 
 </x-app-layout>

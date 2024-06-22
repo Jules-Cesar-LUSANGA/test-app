@@ -16,9 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @teacher
                     <x-nav-link :href="route('exams.index')" :active="request()->routeIs('exams.index')">
-                        {{ __('Exams') }}
+                        {{ __('Evaluations') }}
                     </x-nav-link>
+                    @endteacher
                 </div>
             </div>
 
@@ -75,7 +77,7 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('exams.index')" :active="request()->routeIs('exams.index')">
-                {{ __('Exams') }}
+                {{ __('Evaluations') }}
             </x-responsive-nav-link>
         </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Class\EvaluationPresentation;
 use App\Http\Requests\Exam\CreateExamRequest;
 use App\Models\Exam;
 use Illuminate\Http\Request;
@@ -48,13 +49,14 @@ class ExamController extends Controller
     public function show(Exam $exam)
     {
         // Get exam and its questions
-        // $exam->load('questions');
+        $exam->load(['questions', 'questions.assertions']);
 
         return view('exams.show', compact('exam'));
     }
 
     public function showWithCode(Request $request)
     {
+        // Used when a student want to reply to an evaluation
         $request->validate([
             'code' => 'required'
         ]);
@@ -64,6 +66,20 @@ class ExamController extends Controller
         if ($exam == null) {
             return redirect()->back()->with('error', 'Evaluation code invalid');
         }
+
+        // Check if user passed already this evaluation
+
+        $presentation = EvaluationPresentation::userPassedEvaluation($exam);
+
+        if ($presentation !== null) {
+            return redirect()->back()->with('error', "You can't get access to this evaluation again");
+        }
+
+        // When student access to this evaluation we check it
+        auth()->user()->presentations()
+                    ->create([
+                        'exam_id' => $exam->id
+                    ]);
 
         return redirect()->route('exams.show', $exam->id);
     }
