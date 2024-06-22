@@ -21,6 +21,13 @@
                         {{ __('Evaluations') }}
                     </x-nav-link>
                     @endteacher
+
+                    @student
+                    <x-nav-link :href="route('presentations.index')" :active="request()->routeIs('presentations.index')">
+                        {{ __('Présentations') }}
+                    </x-nav-link>
+                    @endstudent
+
                 </div>
             </div>
 
@@ -76,9 +83,18 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @teacher
             <x-responsive-nav-link :href="route('exams.index')" :active="request()->routeIs('exams.index')">
                 {{ __('Evaluations') }}
             </x-responsive-nav-link>
+            @endteacher
+
+            @student
+            <x-nav-link :href="route('presentations.index')" :active="request()->routeIs('presentations.index')">
+                {{ __('Présentations') }}
+            </x-nav-link>
+            @endstudent
         </div>
 
         <!-- Responsive Settings Options -->

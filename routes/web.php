@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AssertionController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResponseController;
@@ -32,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/submitions/{exam}/get', [SubmitionController::class, 'get'])->name('exams.submittions.get');
     Route::get('/submitions/{presentation}/show', [SubmitionController::class, 'show'])->name('exams.submittions.show');
     Route::post('/submitions/{presentation}/setPoints', [SubmitionController::class, 'setPoints'])->name('exams.submittions.set-points');
+
+    Route::resource('presentations', PresentationController::class);
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
