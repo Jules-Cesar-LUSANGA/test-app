@@ -32,10 +32,18 @@ class SubmitionController extends Controller
             'points' => ['required', 'array'],
         ]);
 
+        $presentation->load('responses.question');
+
         // Récupérer toutes les réponses pour ajouter les côtes
         $i = 0;
 
         foreach ($presentation->responses as $response) {
+
+            // Vérifier que les points accordées sont bien des nombres et ne dépasse pas le nombre de points de la question
+            if (!is_numeric($request->points[$i]) || $request->points[$i] > $response->question->points) {
+                return back()->withErrors(['points' => 'Les points accordées doivent être des nombres et ne doivent pas dépasser le nombre de points de la question']);
+            }
+
             $response->update([
                 'points'    => $request->points[$i]
             ]);

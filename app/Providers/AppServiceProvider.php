@@ -29,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
             return auth()->user()->role_id == 3; 
         });
 
+        // Verify if given question is qcm
+        Blade::if('qcm', function($question){
+            return $question->qcm == true;
+        });
+
+
         Model::preventLazyLoading(!$this->app->isProduction());
     }
 }

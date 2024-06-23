@@ -49,28 +49,21 @@
 
                                     <div class="pl-0 p-2">
                                         <div class="flex justify-between">
-                                            <h2 class="text-lg font-semibold">{{ $loop->iteration . '. ' . $response->question->content }}</h2>
+                                            <h2 class="text-lg font-semibold">{{ "{$loop->iteration}. {$response->question->content} ({$response->question->points} pts)" }}</h2>
                                         </div>
                                         <div class="mt-2 pl-4">
 
                                             @if ($response->question->qcm == true)
-                                                
                                                 @foreach ($response->assertions as $assertion)
 
                                                     @php
                                                         // Check if this is the right response
                                                         $isAnswer = $assertion->questionAssertion->isAnswer;
                                                     @endphp
-
-                                                    @teacher
-                                                        <p @class(['font-bold', 'text-blue-500' => $isAnswer, 'text-red-500' => $isAnswer == false])>
-                                                            {{ $assertion->questionAssertion->content }}
-                                                        </p>
-                                                    @else
-                                                        <p>
-                                                            {{ $assertion->questionAssertion->content }}
-                                                        </p>
-                                                    @endteacher
+                                                    
+                                                    <p @class(['font-bold', 'text-blue-500' => $isAnswer, 'text-red-500' => $isAnswer == false])>
+                                                        {{ $assertion->questionAssertion->content }}
+                                                    </p>
                                                 @endforeach                                              
 
                                             @else
@@ -82,9 +75,15 @@
                                         
                                         @teacher
                                             <div class="mts-4">
-                                                <x-input-label for="points{{ $response->question->id }}" :value="__('Points')" />
-                                                <x-text-input id="points{{ $response->question->id }}" class="block mt-1" type="text" min="0" name="points[]" :value="old('points', $response->points)" required autofocus autocomplete="duration" />
-                                                <x-input-error :messages="$errors->get('points')" class="mt-2" />
+
+                                                @qcm($response->question)
+                                                    <x-text-input id="points{{ $response->question->id }}" class="block mt-1" type="hidden" min="0" name="points[]" :value="old('points', $response->question->qcm == true ? $response->getGoodAssertions() : $response->points)" required />
+                                                    <h2>Points : {{ $response->getGoodAssertions() }}</h2>
+                                                @else
+                                                    <x-input-label for="points{{ $response->question->id }}" :value="__('Points')" />
+                                                    <x-text-input id="points{{ $response->question->id }}" class="block mt-1" type="text" min="0" name="points[]" :value="old('points', $response->question->qcm == true ? $response->getGoodAssertions() : $response->points)" required />
+                                                    <x-input-error :messages="$errors->get('points')" class="mt-2" />
+                                                @endqcm
                                             </div>
                                         @endstudent
 
