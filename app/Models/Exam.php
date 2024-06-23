@@ -31,4 +31,9 @@ class Exam extends Model
     {
         return $this->hasMany(Presentation::class);
     }
+
+    public function totalPoints()
+    {
+        return $this->questions->sum(['points']);
+    }
 }

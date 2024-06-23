@@ -1,9 +1,11 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Réponses à : {{ $exam->course_name }} | Par {{ $student->name }}
-        </h2>
-    </x-slot>
+    @teacher
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Réponses à : {{ $exam->course_name }} | Par {{ $student->name }}
+            </h2>
+        </x-slot>
+    @endteacher
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -33,19 +35,15 @@
                             <div class="my-4">
                                 
                                 {{-- Faire la somme des points --}}
-                                @student
-                                    @php
-                                        $points = 0;
-                                    @endphp
-                                @endstudent
+                                @php
+                                    $points = 0;
+                                @endphp
 
                                 @foreach ($responses as $response)
 
-                                    @student
-                                        @php
-                                            $points += $response->points
-                                        @endphp
-                                    @endstudent
+                                    @php
+                                        $points += $response->points
+                                    @endphp
 
                                     <div class="pl-0 p-2">
                                         <div class="flex justify-between">
@@ -73,29 +71,38 @@
                                             @endif
                                         </div>
                                         
-                                        @teacher
-                                            <div class="mts-4">
+                                        <div class="mts-4">
 
-                                                @qcm($response->question)
-                                                    <x-text-input id="points{{ $response->question->id }}" class="block mt-1" type="hidden" min="0" name="points[]" :value="old('points', $response->question->qcm == true ? $response->getGoodAssertions() : $response->points)" required />
-                                                    <h2>Points : {{ $response->getGoodAssertions() }}</h2>
-                                                @else
+                                        @qcm($response->question)
+                                            <x-text-input id="points{{ $response->question->id }}" class="block mt-1" type="hidden" min="0" name="points[]" :value="old('points', $response->question->qcm == true ? $response->getGoodAssertions() : $response->points)" required />
+                                            <h2>Points : {{ $response->getGoodAssertions() }}</h2>
+                                    
+                                        @else
+                                            @if ($presentation->finished == false)
+                                                @teacher
                                                     <x-input-label for="points{{ $response->question->id }}" :value="__('Points')" />
                                                     <x-text-input id="points{{ $response->question->id }}" class="block mt-1" type="text" min="0" name="points[]" :value="old('points', $response->question->qcm == true ? $response->getGoodAssertions() : $response->points)" required />
                                                     <x-input-error :messages="$errors->get('points')" class="mt-2" />
-                                                @endqcm
-                                            </div>
-                                        @endstudent
+                                                @endteacher
+                                            @else
+                                                <h2>Points : {{ $response->points }}
+                                            @endif  
+                                        @endqcm
+                                            
+                                        </div>
+                                        
 
                                     </div>
                                 @endforeach
                             </div>
                             
-                            @teacher
-                                <x-primary-button>Enregistrer la côte</x-primary-button>
+                            @if ($presentation->finished == false)
+                                @teacher
+                                    <x-primary-button>Enregistrer la côte</x-primary-button>
+                                @endteacher
                             @else
-                                <h2 class="font-bold text-2xl">Côte : {{ $points }}</h2>
-                            @endteacher
+                                <h2 class="font-bold text-2xl">Côte : {{ "{$points}/{$presentation->exam->totalPoints()}" }}</h2>
+                            @endif
                             
                         </form>
                         

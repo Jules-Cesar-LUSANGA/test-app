@@ -13,6 +13,7 @@
                         <tr>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">*</th>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Nom de l'étudiant</th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
                             <th class="px-6 py-3 bg-gray-50"></th>
                         </tr>
@@ -25,6 +26,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap">
                                     <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->user->name }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap">
+                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->finished ? "Corrigé" : "Correction en attente" }}</div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-no-wrap">

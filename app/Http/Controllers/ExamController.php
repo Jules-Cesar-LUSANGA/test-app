@@ -6,9 +6,11 @@ use App\Class\EvaluationPresentation;
 use App\Http\Requests\Exam\CreateExamRequest;
 use App\Models\Exam;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
+    const STUDENT_ROLE_ID = 3;
     /**
      * Display a listing of the resource.
      */
@@ -51,6 +53,9 @@ class ExamController extends Controller
         // Get exam and its questions
         $exam->load(['questions', 'questions.assertions']);
 
+        if (Auth::user()->role_id == self::STUDENT_ROLE_ID) {
+            return view('exams.show-student', compact('exam'));
+        }
         return view('exams.show', compact('exam'));
     }
 

@@ -11,6 +11,7 @@ class PresentationController extends Controller
     {
         $presentations = Auth::user()->presentations()
                                 ->with(['exam'])
+                                ->where('finished', true)
                                 ->orderBy('created_at', 'desc')
                                 ->get();
 

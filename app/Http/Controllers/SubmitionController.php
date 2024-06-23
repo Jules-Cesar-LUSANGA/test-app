@@ -50,8 +50,10 @@ class SubmitionController extends Controller
             $i++;
         }
 
-        dump($presentation->responses);
+        $presentation->update([
+            'finished' => true
+        ]);
 
-        dd($request->all());
+        return back()->with('success', 'Les points ont été attribués avec succès');
     }
 }

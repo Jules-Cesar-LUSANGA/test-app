@@ -5,8 +5,9 @@ Ce projet a été créé pour le concours SoftDay. Il s'agit d'une application w
 ## Fonctionnalités
 
 - **Gestion des evaluations** : Les utilisateurs peuvent créer, lire, mettre à jour et supprimer des evaluations.
-- **Ajouts des questions** : Les utilisateurs peuvent créer, lire, mettre à jour et supprimer des questions.
-    - **Ajouts des assertions** : Une question à choix multiple peux avoir plusieurs assertions.
+    - **Ajouts des questions** : Les utilisateurs peuvent créer, lire, mettre à jour et supprimer des questions.
+        - **Ajouts des assertions** : Une question à choix multiple peux avoir plusieurs assertions.
+- **Les étudiants peuvent présenter les évaluations et attendre la correction**
 
 ## Installation
 
