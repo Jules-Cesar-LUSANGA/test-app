@@ -12,7 +12,7 @@ class Presentation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['exam_id', 'finished'];
+    protected $fillable = ['exam_id', 'finished', 'redo'];
 
     /**
      * Get the user that owns the Presentation

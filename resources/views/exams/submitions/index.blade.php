@@ -28,7 +28,15 @@
                                     <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->user->name }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap">
-                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->finished ? "Corrigé" : "Correction en attente" }}</div>
+                                    <div class="text-sm leading-5 font-medium text-gray-900">
+                                        @if ($presentation->finished == true and $presentation->redo == false)
+                                            Corrigé
+                                        @elseif ($presentation->redo == true)
+                                            Autorisé à refaire
+                                        @else
+                                            En attente de correction
+                                        @endif
+                                    </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-no-wrap">

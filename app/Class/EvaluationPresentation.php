@@ -9,6 +9,11 @@ class EvaluationPresentation {
     
     public static function userPassedEvaluation(Exam $exam) : Presentation | null
     {
-        return auth()->user()->presentations()->where('exam_id', $exam->id)->first();
+        return auth()->user()
+                    ->presentations()
+                    ->where([
+                        'exam_id'   => $exam->id,
+                        'redo'      => false
+                    ])->first();
     }
 }

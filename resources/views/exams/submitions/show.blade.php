@@ -91,11 +91,16 @@
                                             
                                         </div>
                                         
-
                                     </div>
                                 @endforeach
                             </div>
                             
+                            @if ($presentation->redo == false)
+                                @teacher
+                                    <x-primary-button form="second-chance">Autoriser à refaire</x-primary-button>
+                                @endteacher
+                            @endif
+
                             @if ($presentation->finished == false)
                                 @teacher
                                     <x-primary-button>Enregistrer la côte</x-primary-button>
@@ -105,6 +110,11 @@
                             @endif
                             
                         </form>
+                        @teacher
+                            <form action="{{ route('presentations.second-chance', $presentation) }}" id="second-chance" method="post">
+                                @csrf
+                            </form>
+                        @endteacher
                         
                     </div>
                 </div>

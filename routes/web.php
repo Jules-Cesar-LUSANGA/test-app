@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/submitions/{presentation}/setPoints', [SubmitionController::class, 'setPoints'])->name('exams.submittions.set-points');
 
     Route::resource('presentations', PresentationController::class);
+    Route::post('/presentation/{presentation}/redo', [PresentationController::class, 'allowSecondChance'])->name('presentations.second-chance');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

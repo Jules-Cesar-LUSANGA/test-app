@@ -26,7 +26,7 @@
                                 <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->exam->course_name }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap">
-                                <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->exam->created_at->diffForHumans() }}</div>
+                                <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->created_at->diffForHumans() }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                 <a href="{{ route('exams.submittions.show', $presentation->id) }}" class="text-indigo-600 hover:text-indigo-900">Voir</a>

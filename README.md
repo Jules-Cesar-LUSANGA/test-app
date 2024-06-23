@@ -8,6 +8,8 @@ Ce projet a été créé pour le concours SoftDay. Il s'agit d'une application w
     - **Ajouts des questions** : Les utilisateurs peuvent créer, lire, mettre à jour et supprimer des questions.
         - **Ajouts des assertions** : Une question à choix multiple peux avoir plusieurs assertions.
 - **Les étudiants peuvent présenter les évaluations et attendre la correction**
+- **Les étudiants peuvent également refaire une évaluation avec l'autorisation de l'enseignant**
+- **L'étudiant peut voir toutes les évaluations qu'il a passées et ses côtes**
 
 ## Installation
 
@@ -20,7 +22,7 @@ Ce projet a été créé pour le concours SoftDay. Il s'agit d'une application w
 
 ## Utilisation
 
-Pour utiliser l'application, naviguez vers l'URL de votre serveur de développement local.
+Pour utiliser l'application, ouvrez `http://127.0.0.1:8000`.
 
 ## Contribution
 

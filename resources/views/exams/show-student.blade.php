@@ -6,7 +6,7 @@
             <h1 class="text-2xl font-semibold">Questions</h1>
 
             <div class="my-4">
-                @foreach ($exam->questions as $question)
+                @foreach ($questions as $question)
                     <div class="pl-0 px-4 mb-3">
                         <div class="flex justify-between">
                             <h2 class="text-lg font-semibold">{{ "{$loop->iteration}.  {$question->content} ({$question->points} pts)" }}</h2>

@@ -54,7 +54,13 @@ class ExamController extends Controller
         $exam->load(['questions', 'questions.assertions']);
 
         if (Auth::user()->role_id == self::STUDENT_ROLE_ID) {
-            return view('exams.show-student', compact('exam'));
+            // Récuperer les questions en inversant l'ordre
+            $questions = $exam->questions()
+                                ->with(['assertions'])
+                                ->get()
+                                ->shuffle();
+
+            return view('exams.show-student', compact('exam', 'questions'));
         }
         return view('exams.show', compact('exam'));
     }
