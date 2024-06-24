@@ -22,7 +22,8 @@ class UpdateQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content'  => 'required|min:6'
+            'content'   => 'required|min:6',
+            'points'    => 'required|numeric|min:0'
         ];
     }
 }

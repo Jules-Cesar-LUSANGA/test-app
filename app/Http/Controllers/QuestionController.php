@@ -66,7 +66,8 @@ class QuestionController extends Controller
     public function update(UpdateQuestionRequest $request, Question $question)
     {
         $question->update([
-            'content'   => $request->input('content')
+            'content'   => $request->input('content'),
+            'points'   => $request->input('points'),
         ]);
 
         return to_route('exams.show', $question->exam);

@@ -1,3 +1,4 @@
+*Interdire à l'enseignant de modifier une évaluation si les étudiants ont commencé les présentations
 *Créer des notifications flash agréables (session('status'))
 
 *Mettre un système de notification :
