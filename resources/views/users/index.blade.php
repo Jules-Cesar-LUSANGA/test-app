@@ -19,7 +19,7 @@
                 </form>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-3">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
@@ -60,6 +60,10 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <div>
+                {{ $users->links() }}
             </div>
         </div>
     </div>

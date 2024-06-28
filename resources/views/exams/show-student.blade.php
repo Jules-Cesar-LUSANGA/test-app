@@ -35,4 +35,23 @@
         </form>
     </div>
 
+    <script>
+        // Interdire le clic droit
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Interdire certaines touches
+        document.addEventListener('keydown', function(e) {
+            // Liste des touches à interdire
+            var forbiddenKeys = ['Alt', 'Control', 'Shift', 'Meta', 'Fn'];
+
+            // Si la touche est dans la liste des touches interdites, ou si c'est une lettre et que l'élément ciblé n'est pas un input, interdire la touche
+            if (forbiddenKeys.includes(e.key) || (e.key.match(/^[A-Za-z]$/) && e.target.tagName !== 'INPUT')) {
+                e.preventDefault();
+            }
+        });
+        
+    </script>
+
 </x-evaluation-layout>
