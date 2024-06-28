@@ -8,6 +8,9 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    const ADMIN_ROLE_ID = 1;
+    const TEACHER_ROLE_ID = 2;
+    const STUDENT_ROLE_ID = 3;
     /**
      * Register any application services.
      */
@@ -21,12 +24,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Blade::if('admin', function(){
+            return auth()->user()->role_id == self::ADMIN_ROLE_ID; 
+        });
+
         Blade::if('teacher', function(){
-            return auth()->user()->role_id == 2; 
+            return auth()->user()->role_id == self::TEACHER_ROLE_ID; 
         });
 
         Blade::if('student', function(){
-            return auth()->user()->role_id == 3; 
+            return auth()->user()->role_id == self::STUDENT_ROLE_ID; 
         });
 
         // Verify if given question is qcm
