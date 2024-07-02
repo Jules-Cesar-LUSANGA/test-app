@@ -23,8 +23,9 @@ class CreateExamRequest extends FormRequest
     {
         return [
             'course_name' => ['required', 'string', 'max:255'],
+            'attempts'    => ['required', 'min:1', 'integer'],
             'description' => ['required', 'string'],
-            'duration' => ['required', 'integer', 'min:1'],
+            'duration'    => ['required', 'integer', 'min:1'],
         ];
     }
 }

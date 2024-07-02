@@ -16,8 +16,13 @@
                         <x-input-error :messages="$errors->get('course_name')" class="mt-2" />
                     </div>
                     <div class="mt-4">
+                        <x-input-label for="attempts" :value="__('Tentatives')" />
+                        <x-text-input id="attempts" class="block mt-1 w-full" type="number" name="attempts" :value="old('attempts', 1)" min="1" required autofocus autocomplete="attempts" />
+                        <x-input-error :messages="$errors->get('attempts')" class="mt-2" />
+                    </div>
+                    <div class="mt-4">
                         <x-input-label for="duration" :value="__('Durée')" />
-                        <x-text-input id="duration" class="block mt-1 w-full" type="number" min="0" name="duration" :value="old('duration')" required autofocus autocomplete="duration" />
+                        <x-text-input id="duration" class="block mt-1 w-full" type="number" min="0" name="duration" :value="old('duration')" min="1" required autofocus autocomplete="duration" />
                         <x-input-error :messages="$errors->get('duration')" class="mt-2" />
                     </div>
                     <div class="mt-4">

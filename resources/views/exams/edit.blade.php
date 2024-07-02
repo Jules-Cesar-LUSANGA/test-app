@@ -19,6 +19,10 @@
                             <input type="text" name="course_name" id="course_name" value="{{ $exam->course_name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
                         <div class="mb-4">
+                            <label for="attempts" class="block text-gray-700 text-sm font-bold mb-2">Tentatives : </label>
+                            <input type="number" name="attempts" id="attempts" value="{{ $exam->attempts }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div class="mb-4">
                             <label for="duration" class="block text-gray-700 text-sm font-bold mb-2">Durée : </label>
                             <input type="number" name="duration" id="duration" value="{{ $exam->duration }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
