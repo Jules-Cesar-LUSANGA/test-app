@@ -72,7 +72,7 @@
         assertionInput.setAttribute('name', 'assertions[]');
         assertionInput.setAttribute('type', 'text');
         assertionInput.setAttribute('placeholder', 'Type assertion content');
-        assertionInput.setAttribute('class', 'w-11/12');
+        assertionInput.setAttribute('class', 'w-full rounded');
 
         li.appendChild(assertionInput)
 

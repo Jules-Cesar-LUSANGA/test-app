@@ -10,9 +10,10 @@ use App\Http\Controllers\SubmitionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::redirect('/', 'login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
