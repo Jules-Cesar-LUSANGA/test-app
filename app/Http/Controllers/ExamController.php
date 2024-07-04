@@ -80,17 +80,7 @@ class ExamController extends Controller
 
         // Check if user passed already this evaluation
 
-        $presentation = EvaluationPresentation::userPassedEvaluation($exam);
-
-        if ($presentation !== null) {
-            return redirect()->back()->with('error', "You can't get access to this evaluation again");
-        }
-
-        // When student access to this evaluation we check it
-        auth()->user()->presentations()
-                    ->create([
-                        'exam_id' => $exam->id
-                    ]);
+        EvaluationPresentation::userPassedEvaluation($exam);
 
         return redirect()->route('exams.show', $exam->id);
     }

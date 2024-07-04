@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Presentation;
 use App\Models\Question;
+use App\Models\Submition;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Presentation::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Submition::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Question::class)->constrained()->cascadeOnDelete();
             $table->longText('content')->nullable();
             $table->timestamps();

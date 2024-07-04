@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Presentation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,8 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('presentations', function (Blueprint $table) {
+        Schema::create('submitions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Presentation::class);
             $table->boolean('finished')->default(false);
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('presentations', function (Blueprint $table) {
-            $table->dropColumn('finished');
-        });
+        Schema::dropIfExists('submitions');
     }
 };

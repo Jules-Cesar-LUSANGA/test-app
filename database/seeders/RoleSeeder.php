@@ -22,9 +22,6 @@ class RoleSeeder extends Seeder
                 ],
                 [
                     'name'  => 'Etudiant'
-                ],
-                [
-                    'name'  => 'Surveillant'
                 ]
             )->create();
     }

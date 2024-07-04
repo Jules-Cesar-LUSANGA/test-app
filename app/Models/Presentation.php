@@ -12,7 +12,7 @@ class Presentation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['exam_id', 'finished', 'redo'];
+    protected $fillable = ['exam_id', 'user_id'];
 
     /**
      * Get the user that owns the Presentation
@@ -36,12 +36,12 @@ class Presentation extends Model
     }
 
     /**
-     * Get all of the responses for the Presentation
+     * Get all of the submitions for the Presentation
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function responses(): HasMany
+    public function submitions(): HasMany
     {
-        return $this->hasMany(Response::class);
+        return $this->hasMany(Submition::class);
     }
 }

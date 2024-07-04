@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use App\Models\Presentation;
+use App\Models\Submition;
 use Illuminate\Http\Request;
 
 class SubmitionController extends Controller
@@ -17,27 +18,27 @@ class SubmitionController extends Controller
 
     public function show(Presentation $presentation)
     {
-        $presentation->load(['responses.question', 'responses.assertions', 'responses.assertions.questionAssertion']);
+        // $presentation->load(['responses.question', 'responses.assertions', 'responses.assertions.questionAssertion']);
 
         $exam = $presentation->exam;
         $student = $presentation->user;
-        $responses = $presentation->responses;
+        $submitions = $presentation->submitions;
         
-        return view('exams.submitions.show', compact('presentation', 'exam', 'student', 'responses'));
+        return view('exams.submitions.show', compact('presentation', 'exam', 'student', 'submitions'));
     }
 
-    public function setPoints(Presentation $presentation, Request $request)
+    public function setPoints(Submition $submition, Request $request)
     {
         $request->validate([
             'points' => ['required', 'array'],
         ]);
 
-        $presentation->load('responses.question');
+        $submition->load('responses.question');
 
         // Récupérer toutes les réponses pour ajouter les côtes
         $i = 0;
 
-        foreach ($presentation->responses as $response) {
+        foreach ($submition->responses as $response) {
 
             // Vérifier que les points accordées sont bien des nombres et ne dépasse pas le nombre de points de la question
             if (!is_numeric($request->points[$i]) || $request->points[$i] > $response->question->points) {
@@ -50,7 +51,8 @@ class SubmitionController extends Controller
             $i++;
         }
 
-        $presentation->update([
+        // Marquer comme déjà corrigé
+        $submition->update([
             'finished' => true
         ]);
 

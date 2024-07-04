@@ -12,6 +12,9 @@ class ResponseController extends Controller
     {
         $presentation = EvaluationPresentation::userPassedEvaluation($exam);
 
+        // Create a submition
+        $submition = $presentation->submitions()->create();
+
         $data = $request->except('_token');
 
         // dd($data);
@@ -33,7 +36,7 @@ class ResponseController extends Controller
                     
                     // Save this assertion response if not saved
 
-                    $response = $presentation->responses()->where('question_id', $question->id)->firstOrCreate([
+                    $response = $submition->responses()->where('question_id', $question->id)->firstOrCreate([
                         'question_id' => $question->id
                     ]);
 
@@ -42,7 +45,7 @@ class ResponseController extends Controller
                     ]);
 
                 } else {
-                    $presentation->responses()->create([
+                    $submition->responses()->create([
                         'question_id' => $question->id,
                         'content'     => $value
                     ]);

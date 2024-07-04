@@ -3,17 +3,24 @@
 namespace App\Class;
 
 use App\Models\Exam;
-use App\Models\Presentation;
+use Illuminate\Support\Facades\Auth;
 
 class EvaluationPresentation {
     
-    public static function userPassedEvaluation(Exam $exam) : Presentation | null
+    public static function userPassedEvaluation(Exam $exam)
     {
-        return auth()->user()
+        $presentation = auth()->user()
                     ->presentations()
                     ->where([
                         'exam_id'   => $exam->id,
-                        'redo'      => false
                     ])->first();
+        
+        if ($presentation == null) {
+            $presentation = $exam->presentations()->create([
+                'user_id' => Auth::id()
+            ]);
+        }
+        
+        return $presentation;
     }
 }
