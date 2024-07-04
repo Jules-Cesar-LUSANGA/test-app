@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Exam::class)->constrained()->cascadeOnDelete();
-            $table->integer('attempts')->default(1);
             $table->timestamps();
         });
     }

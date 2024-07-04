@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Class\EvaluationPresentation;
 use App\Http\Requests\Exam\CreateExamRequest;
 use App\Models\Exam;
+use App\Models\Presentation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -80,7 +81,12 @@ class ExamController extends Controller
 
         // Check if user passed already this evaluation
 
-        EvaluationPresentation::userPassedEvaluation($exam);
+        $presentation = EvaluationPresentation::userPassedEvaluation($exam);
+
+        // Set presented
+        $presentation->update([
+            'retake' => false,
+        ]);
 
         return redirect()->route('exams.show', $exam->id);
     }
@@ -117,6 +123,16 @@ class ExamController extends Controller
                         ->with('success', 'Exam deleted successfully');
     }
 
+    public function allowAnotherChance(Exam $exam)
+    {
+        $exam->presentations()->each(function($presentation){
+            $presentation->update([
+                'retake'    => true
+            ]);
+        });
+
+        return back()->with("success", "Une nouvelle chance a été accordée !");
+    }
 
     public function generateCode()
     {

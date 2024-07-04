@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('exams', ExamController::class);
     Route::post('/exams/show/with-code', [ExamController::class, 'showWithCode'])->name('exams.show-with-code');
+    Route::post('/exams/{exam}/another-chance', [ExamController::class, 'allowAnotherChance'])->name('exams.another-chance');
 
     // Create questions resource
     Route::resource('questions', QuestionController::class)->only(['edit','destroy', 'update']);
@@ -37,8 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/submitions/{submition}/setPoints', [SubmitionController::class, 'setPoints'])->name('exams.submittions.set-points');
 
     Route::resource('presentations', PresentationController::class);
-    Route::post('/presentation/{presentation}/redo', [PresentationController::class, 'allowSecondChance'])->name('presentations.second-chance');
-
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

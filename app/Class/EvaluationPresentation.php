@@ -17,8 +17,11 @@ class EvaluationPresentation {
         
         if ($presentation == null) {
             $presentation = $exam->presentations()->create([
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
+                'retake'  => true,
             ]);
+        }elseif ($presentation->retake == false) {
+            abort(403); 
         }
         
         return $presentation;

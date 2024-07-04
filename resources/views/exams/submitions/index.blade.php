@@ -7,13 +7,18 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex justify-end mb-3">
+                <form action="{{ route('exams.another-chance', $exam) }}" method="post">
+                    @csrf
+                    <x-primary-button>Refaire l'évaluation</x-primary-button>
+                </form>
+            </div>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">*</th>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Nom de l'étudiant</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
                             <th class="px-6 py-3 bg-gray-50"></th>
                         </tr>
@@ -26,17 +31,6 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap">
                                     <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->user->name }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap">
-                                    <div class="text-sm leading-5 font-medium text-gray-900">
-                                        @if ($presentation->finished == true and $presentation->redo == false)
-                                            Corrigé
-                                        @elseif ($presentation->redo == true)
-                                            Autorisé à refaire
-                                        @else
-                                            En attente de correction
-                                        @endif
-                                    </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-no-wrap">
