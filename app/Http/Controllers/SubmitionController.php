@@ -18,7 +18,7 @@ class SubmitionController extends Controller
 
     public function show(Presentation $presentation)
     {
-        // $presentation->load(['responses.question', 'responses.assertions', 'responses.assertions.questionAssertion']);
+        $presentation->load(['submitions.responses.question', 'submitions.responses.assertions', 'submitions.responses.assertions.questionAssertion']);
 
         $exam = $presentation->exam;
         $student = $presentation->user;

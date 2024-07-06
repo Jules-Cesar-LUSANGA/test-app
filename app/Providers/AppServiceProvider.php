@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Exam;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -41,7 +42,15 @@ class AppServiceProvider extends ServiceProvider
             return $question->qcm == true;
         });
 
+        // Verify if given question is qcm
+        Blade::if('notPresented', function(Exam $exam){
+            if ($exam->presentations()->count() == 0) {
+                return true;
+            }
+            return false;
+        });
 
-        // Model::preventLazyLoading(!$this->app->isProduction());
+
+        Model::preventLazyLoading(!$this->app->isProduction());
     }
 }

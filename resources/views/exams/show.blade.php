@@ -24,28 +24,31 @@
 
         
         @teacher()
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4 flex items-center justify-between">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-4 flex items-center justify-end">
                 
-                <a href="{{ route('exams.submittions.get', $exam) }}" class="text-white font-bold border px-2 py-1 rounded-lg bg-cyan-800">Soumissions</a>
+                @notPresented($exam)
+                    <div>
+                        
+                        <x-primary-button 
+                            x-data=""
+                            x-on:click.prevent="$dispatch('open-modal', 'add_qcm_question')"
+                            class="mx-2"
+                        >
+                            Ajouter une question QCM
+                        </x-primary-button>
 
-                <div class="flex justify-end">
-                    
-                    <x-primary-button 
-                        x-data=""
-                        x-on:click.prevent="$dispatch('open-modal', 'add_qcm_question')"
-                        class="mx-2"
-                    >
-                        Ajouter une question QCM
-                    </x-primary-button>
+                        <x-primary-button
+                            x-data=""
+                            x-on:click.prevent="$dispatch('open-modal', 'add_question')"
+                        >
+                            Ajouter une simple question
+                        </x-primary-button>
 
-                    <x-primary-button
-                        x-data=""
-                        x-on:click.prevent="$dispatch('open-modal', 'add_question')"
-                    >
-                        Ajouter une simple question
-                    </x-primary-button>
+                    </div>
+                @else
+                    <a href="{{ route('exams.submittions.get', $exam) }}" class="text-white font-bold border px-2 py-1 rounded-lg bg-cyan-800">Soumissions</a>
+                @endnotPresented
 
-                </div>
             </div>
 
             {{-- Add modals --}}
@@ -70,17 +73,16 @@
                                     <div class="pl-0 px-4">
                                         <div class="flex justify-between">
                                             <h2 class="text-lg font-semibold">{{ "{$loop->iteration}.  {$question->content} ({$question->points} pts)" }}</h2>
-                            
-                                            @teacher
-                                                <div class="flex items-center">
-                                                    <a href="{{ route('questions.edit', $question) }}" class="text-blue-500">Edit</a>
-                                                    <form action="{{ route('questions.destroy', $question) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="text-red-500">Delete</button>
-                                                    </form>
-                                                </div>
-                                            @endteacher
+                                            @notPresented($exam)
+                                            <div class="flex items-center">
+                                                <a href="{{ route('questions.edit', $question) }}" class="text-blue-500">Edit</a>
+                                                <form action="{{ route('questions.destroy', $question) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500">Delete</button>
+                                                </form>
+                                            </div>
+                                            @endnotPresented
                                         </div>
                                         <div class="mt-2">
                                             @if ($question->qcm == true)
@@ -88,34 +90,23 @@
                                                     @foreach ($question->assertions as $assertion)
                                                         <li class="flex items-center justify-between mt-1">
                                                             <div>
-                                                                @student
-                                                                    <input type="checkbox" name="question{{ $question->id }}-assertion-{{ $assertion->id }}" class="mr-2">
-                                                                @endstudent
-                                                                <label for="assertion" @class(['font-bold text-blue-500' => $assertion->isAnswer == true and (auth()->user()->role_id == 2)])>{{ $assertion->content }}</label>
+                                                                <label for="assertion" @class(['font-bold text-blue-500' => $assertion->isAnswer == true])>{{ $assertion->content }}</label>
                                                             </div>
-                                                            @teacher()
+                                                            @notPresented($exam)
                                                             <form action="{{ route('assertion.IsAnswer', $assertion) }}" method="post">
                                                                 @csrf
                                                                 <input type="submit" value="Bonne réponse" class="py-1 px-3 bg-{{ $assertion->isAnswer == true ? 'red' : 'cyan' }}-600 rounded">
                                                             </form>
-                                                            @endteacher
+                                                            @endnotPresented
                                                         </li>
                                                     @endforeach
                                                 </ul>
-                                            @else
-                                                @student
-                                                    <input type="text" required name="question{{ $question->id }}" class="w-full border border-gray-200 p-2" placeholder="Answer">
-                                                @endstudent
                                             @endif
                         
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-                            
-                            @student
-                                <x-primary-button>Soumettre</x-primary-button>
-                            @endstudent
                             
                         </form>
 
