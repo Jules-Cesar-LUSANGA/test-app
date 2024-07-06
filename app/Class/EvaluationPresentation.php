@@ -20,8 +20,6 @@ class EvaluationPresentation {
                 'user_id' => Auth::id(),
                 'retake'  => true,
             ]);
-        }elseif ($presentation->retake == false) {
-            abort(403); 
         }
         
         return $presentation;

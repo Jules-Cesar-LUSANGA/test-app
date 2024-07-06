@@ -17,8 +17,6 @@ class ResponseController extends Controller
 
         $data = $request->except('_token');
 
-        // dd($data);
-
         foreach ($data as $key => $value) {
 
             // Get question id
@@ -53,6 +51,11 @@ class ResponseController extends Controller
             }
 
         }
+
+        // Student can't submit again this presentation if not allowed
+        $presentation->update([
+            'retake' => false,
+        ]);
 
         return redirect()->route('dashboard')->with('success', 'Evaluation submitted');
     }

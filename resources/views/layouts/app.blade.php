@@ -32,17 +32,7 @@
             <!-- Page Content -->
             <main>
 
-                @session('error')
-                    <div class="my-3 font-bold text-red-500 p-4">
-                        {{ session('error') }}
-                    </div>
-                @endsession
-
-                @session('success')
-                    <div class="my-3 font-bold text-blue-500 p-4">
-                        {{ session('success') }}
-                    </div>
-                @endsession
+                <x-flash-notifications />
 
                 {{ $slot }}
             </main>

@@ -51,18 +51,8 @@ class ExamController extends Controller
      */
     public function show(Exam $exam)
     {
-        // Get exam and its questions
-        $exam->load(['questions', 'questions.assertions']);
+        $exam = $this->getExamAndQuestions($exam);
 
-        if (Auth::user()->role_id == self::STUDENT_ROLE_ID) {
-            // Récuperer les questions en inversant l'ordre
-            $questions = $exam->questions()
-                                ->with(['assertions'])
-                                ->get()
-                                ->shuffle();
-
-            return view('exams.show-student', compact('exam', 'questions'));
-        }
         return view('exams.show', compact('exam'));
     }
 
@@ -82,13 +72,16 @@ class ExamController extends Controller
         // Check if user passed already this evaluation
 
         $presentation = EvaluationPresentation::userPassedEvaluation($exam);
+        abort_if($presentation->retake == false, 403);
 
         // Set presented
         $presentation->update([
             'retake' => false,
         ]);
 
-        return redirect()->route('exams.show', $exam->id);
+        [$exam, $questions] = $this->getExamAndQuestions($exam);
+        
+        return view('exams.show-student', compact('exam', 'questions'));
     }
 
     /**
@@ -132,6 +125,24 @@ class ExamController extends Controller
         });
 
         return back()->with("success", "Une nouvelle chance a été accordée !");
+    }
+
+    public function getExamAndQuestions(Exam $exam)
+    {
+        // Get exam and its questions
+        $exam->load(['questions', 'questions.assertions']);
+
+        if (Auth::user()->role_id == self::STUDENT_ROLE_ID) {
+            // Récuperer les questions en inversant l'ordre
+            $questions = $exam->questions()
+                                ->with(['assertions'])
+                                ->get()
+                                ->shuffle();
+
+            return [$exam, $questions];
+        }
+
+        return $exam;
     }
 
     public function generateCode()

@@ -7,12 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if (session('status'))
-                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
-            
             <div class="flex justify-center">
                 <form method="POST" action="{{ route('users.update', $user) }}" class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                     @csrf

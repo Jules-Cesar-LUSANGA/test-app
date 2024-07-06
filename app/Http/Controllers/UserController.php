@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         // Check user email
         if (!$this->checkEmailBelongsToUser($user, $request->email)) {
-            return back()->with('status', 'Email déjà utilisé');
+            return back()->with('success', 'Email déjà utilisé');
         }
 
         $user->update($request->validated());
