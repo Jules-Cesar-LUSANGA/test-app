@@ -1,61 +1,58 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Evaluations
-        </h2>
-    </x-slot>
+<x-app-layout pageTitle="Evaluations" pageLinkText="Créer une évaluation" :pageLinkUrl="route('exams.create')">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-end mb-4">
-                <form action="{{ route('exams.create') }}" method="get">
-                    <x-primary-button>Créer une évaluation</x-primary-button>
-                </form>
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-3">
+        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div class="grid grid-cols-7 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">  
+                <div class="col-span-1 flex items-center">
+                    <p class="font-medium">*</p>
+                </div>
+                <div class="col-span-3 flex items-center">
+                    <p class="font-medium">Titre</p>
+                </div>
+                <div class="col-span-1 hidden items-center">
+                    <p class="font-medium">Duree</p>
+                </div>
+                <div class="col-span-1 flex items-center">
+                    <p class="font-medium">Code</p>
+                </div>
+                <div class="col-span-1 flex items-center">
+                    <p class="font-medium"></p>
+                </div>
+
             </div>
+                      
+                @foreach ($exams as $exam)
+                    
+                    <div class="grid grid-cols-8 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
+                        <div class="col-span-1 flex items-center">
+                            <p class="text-sm font-medium text-black dark:text-white">{{ $loop->iteration }}</p>
+                        </div>
+                        <div class="col-span-3 flex items-center">
+                            <p class="text-sm font-medium text-black dark:text-white">
+                                <a href="{{ route('exams.show', $exam) }}" class="mr-3 text-meta-5">{{ $exam->course_name }}</a>
+                            </p>
+                        </div>
+                        <div class="col-span-1 hidden items-center sm:flex">
+                            <p class="text-sm font-medium text-black dark:text-white">{{ $exam->duration }} mins</p>
+                        </div>
+                        <div class="col-span-1 flex items-center">
+                            <p class="text-sm font-medium text-black dark:text-white">{{ $exam->code }}</p>
+                        </div>
+                        <div class="col-span-1 flex items-center">
+                            @notPresented($exam)
+                                <a href="{{ route('exams.edit', $exam->id) }}" class="mr-3 text-meta-5">Editer</a>
+                                <form action="{{ route('exams.destroy', $exam->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-danger">Supprimer</button>
+                                </form>
+                            @endnotPresented
+                        </div>
+                    </div>
+                @endforeach
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead>
-                        <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Titre</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Durée (mins)</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Code</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                            <th class="px-6 py-3 bg-gray-50"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($exams as $exam)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap">
-                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $exam->course_name }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap">
-                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $exam->duration }} mins</div>
-                                </td>
+          </div>
 
-                                <td class="px-6 py-4 whitespace-no-wrap">
-                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $exam->code }}</div>
-                                </td>
-
-                                <td class="px-6 py-4 whitespace-no-wrap">
-                                    <div class="text-sm leading-5 text-gray-500">{{ Str::limit($exam->description, 100, '...') }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                    <a href="{{ route('exams.show', $exam->id) }}" class="text-indigo-600 hover:text-indigo-900">Voir</a>
-                                    <a href="{{ route('exams.edit', $exam->id) }}" class="text-indigo-600 hover:text-indigo-900">Editer</a>
-                                    <form action="{{ route('exams.destroy', $exam->id) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 
 </x-app-layout>

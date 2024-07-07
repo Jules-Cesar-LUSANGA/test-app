@@ -1,46 +1,45 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Soumissions pour {{ $exam->course_name }}
-        </h2>
+<x-app-layout pageTitle="Soumissions : {{ $exam->course_name }}">
+    
+    <x-slot name="pageButton">
+        <form action="{{ route('exams.another-chance', $exam) }}" method="post">
+            @csrf
+            <x-primary-button>Refaire l'évaluation</x-primary-button>
+        </form>
     </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-end mb-3">
-                <form action="{{ route('exams.another-chance', $exam) }}" method="post">
-                    @csrf
-                    <x-primary-button>Refaire l'évaluation</x-primary-button>
-                </form>
+    
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-3">
+        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div class="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">  
+                <div class="col-span-1 flex items-center">
+                    <p class="font-medium">*</p>
+                </div>
+                <div class="col-span-3 flex items-center">
+                    <p class="font-medium">Nom de l'étudiant</p>
+                </div>
+                <div class="col-span-1 hidden items-center sm:flex">
+                    <p class="font-medium">Date</p>
+                </div>
             </div>
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead>
-                        <tr>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">*</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Nom de l'étudiant</th>
-                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
-                            <th class="px-6 py-3 bg-gray-50"></th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($exam->presentations as $presentation)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap">
-                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $loop->iteration }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap">
-                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $presentation->user->name }}</div>
-                                </td>
+                      
+                @foreach ($exam->presentations as $presentation)
+                    
+                    <div class="grid grid-cols-8 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
+                        <div class="col-span-1 flex items-center">
+                            <p class="text-sm font-medium text-black dark:text-white">{{ $loop->iteration }}</p>
+                        </div>
+                        <div class="col-span-3 flex items-center">
+                            <p class="text-sm font-medium text-black dark:text-white">
+                                <a href="{{ route('exams.submittions.show', $presentation) }}" class="text-meta-5">{{ $presentation->user->name }}</a>
+                            </p>
+                        </div>
+                        <div class="col-span-1 hidden items-center sm:flex">
+                            <p class="text-sm font-medium text-black dark:text-white">{{ $presentation->updated_at }}</p>
+                        </div>
+                    </div>
+                @endforeach
 
-                                <td class="px-6 py-4 whitespace-no-wrap">
-                                    <a href="{{ route('exams.submittions.show', $presentation) }}" class="text-blue-500 font-bold">Voir</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+          </div>
+
     </div>
+
 </x-app-layout>

@@ -10,6 +10,9 @@ use App\Http\Controllers\SubmitionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/test', function () {
+    return view('d');
+});
 // Route::get('/', function () {
 //     return view('welcome');
 // });
