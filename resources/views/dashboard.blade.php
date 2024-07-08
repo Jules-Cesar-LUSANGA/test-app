@@ -3,15 +3,18 @@
         @student
             
             <div>
-               <form action="{{ route('exams.show-with-code') }}" method="post">
+               <form action="{{ route('exams.show-with-code') }}" method="post" class="bg-white p-3 rounded-md shadow-md flsex items-center">
                     @csrf
-                    <div id="evaluationCodeForm" class="bg-white p-3 overflow-hidden shadow-sm sm:rounded-lg mt-3">
-                        <x-input-label for="code" :value="__('Password')" />
-                        <input id="code" type="text" name="code" class="mt-1 rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" value="{{ old('code') }}" required autofocus/>
-                        <x-input-error :messages="$errors->get('code')" class="mt-2" />
+                    <x-input-label for="code" class="block mb-3" value="Code de l'évaluation" />
+                    <div class="flex items-center">
+                        <x-text-input id="code" type="text" name="code"  value="{{ old('code') }}"  autofocus required/>
+                        <x-primary-button class="ml-3">Accéder</x-primary-button>
                     </div>
+                    <x-input-error :messages="$errors->get('code')" class="mt-2" />
+
+                    
                 </form>
-            </div><x-primary-button>Accéder à l'évaluation</x-primary-button>
+            </div>
 
         @else
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad porro aperiam cupiditate saepe ipsum corporis, quam, eum consectetur, nihil natus ab sint hic aut totam laborum quidem tenetur deleniti doloribus?

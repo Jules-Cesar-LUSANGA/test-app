@@ -10,12 +10,12 @@
 
 <x-app-layout :pageTitle="$pageTitle">
     
-    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-        <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-            <div>
-                <div class="flex justify-between">
-                    <h1 class="text-2xl font-semibold">{{ $exam->course_name }}</h1>
-                    <p class="text-gray-500">Durée : {{ $exam->duration }} minutes</p>
+    <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg">
+        <div class="py-6 px-10">
+            <div class="text-black">
+                <div class="lg:flex justify-between">
+                    <h1 class="text-2xl font-semibold mb-3">{{ $exam->course_name . " (" . $exam->code . ")" }}</h1>
+                    <p class="lg:text-gray-500 mb-3 lg:mb-0 font-bold lg:font-normal">Durée : {{ $exam->duration }} minutes</p>
                 </div>
                 <div>
                     <p class="text-gray-500">{{ $exam->description }}</p>
@@ -28,7 +28,7 @@
 
         @foreach ($submitions as $submition)
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-3">
-                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                <div class="py-6 px-10 bg-white border-b border-gray-200">
                                 
                     <div>
                         <form action="{{ route('exams.submittions.set-points', $submition) }}" method="POST">
@@ -78,7 +78,7 @@
 
                                         @qcm($response->question)
                                             <x-text-input id="points{{ $response->question->id }}" class="block mt-1" type="hidden" min="0" name="points[]" :value="old('points', $response->question->qcm == true ? $response->getGoodAssertions() : $response->points)" required />
-                                            <h2>Points : {{ $response->getGoodAssertions() }}</h2>
+                                            <h2 class="font-bold">Points : {{ $response->getGoodAssertions() }}</h2>
                                     
                                         @else
                                             @if ($submition->finished == false)
@@ -88,7 +88,7 @@
                                                     <x-input-error :messages="$errors->get('points')" class="mt-2" />
                                                 @endteacher
                                             @else
-                                                <h2>Points : {{ $response->points }}
+                                                <h2 class="font-bold">Points : {{ $response->points }}
                                             @endif  
                                         @endqcm
                                             

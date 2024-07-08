@@ -2,9 +2,9 @@
         <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg">
             <div class="py-6 px-10">
                 <div class="text-black">
-                    <div class="flex justify-between">
+                    <div class="lg:flex justify-between">
                         <h1 class="text-2xl font-semibold mb-3">{{ $exam->course_name . " (" . $exam->code . ")" }}</h1>
-                        <p class="text-gray-500">Durée : {{ $exam->duration }} minutes</p>
+                        <p class="lg:text-gray-500 mb-3 lg:mb-0 font-bold lg:font-normal">Durée : {{ $exam->duration }} minutes</p>
                     </div>
                     <div>
                         <p class="text-gray-500">{{ $exam->description }}</p>
@@ -22,7 +22,7 @@
                         
                         <x-primary-button 
                             onclick="window.add_qcm_question.showModal();"
-                            class="mx-2"
+                            class="md:mx-2 mb-3"
                         >
                             Ajouter une question QCM
                         </x-primary-button>
@@ -61,10 +61,10 @@
                             <div class="my-4">
                                 @foreach ($exam->questions as $question)
                                     <div class="pl-0 px-4">
-                                        <div class="flex items-center">
+                                        <div class="lg:flex items-center">
                                             <h2 class="text-lg font-semibold">{{ "{$loop->iteration}.  {$question->content} ({$question->points} pts)" }}</h2>
                                             @notPresented($exam)
-                                            <div class="flex items-center ml-4">
+                                            <div class="flex items-center lg:ml-4">
                                                 <a href="{{ route('questions.edit', $question) }}" class="text-blue-500 font-bold hover:underline mr-4">Modifier</a>
                                                 <form action="{{ route('questions.destroy', $question) }}" method="POST">
                                                     @csrf
