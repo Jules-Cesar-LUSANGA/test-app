@@ -118,6 +118,15 @@ class ExamController extends Controller
 
     public function allowAnotherChance(Exam $exam)
     {
+        // Decrement exam attempts
+        if ($exam->attempts > 0) {
+            $exam->update([
+                'attempts' => $exam->attempts - 1
+            ]);
+        } else {
+            return back()->with('error', 'Le nombre de tentative restante est de 0');
+        }
+        
         $exam->presentations()->each(function($presentation){
             $presentation->update([
                 'retake'    => true

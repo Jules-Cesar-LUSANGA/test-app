@@ -1,7 +1,7 @@
 <x-app-layout pageTitle="Soumissions">
     
     <x-slot name="pageButton">
-        <form action="{{ route('exams.another-chance', 1) }}" method="post">
+        <form action="{{ route('exams.another-chance', $exam) }}" method="post">
             @csrf
             <x-primary-button>Refaire l'évaluation</x-primary-button>
         </form>
