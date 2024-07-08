@@ -1,57 +1,53 @@
 <x-app-layout pageTitle="Utilisateurs" pageLinkText="Ajouter un utilisateur" :pageLinkUrl="route('users.create')">
     
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-3">
-        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div class="grid grid-cols-8 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">  
-                <div class="col-span-1 flex items-center">
-                    <p class="font-medium">*</p>
-                </div>
-                <div class="col-span-3 flex items-center">
-                    <p class="font-medium">Nom complet</p>
-                </div>
-                <div class="col-span-1 hidden items-center sm:flex">
-                    <p class="font-medium">Status</p>
-                </div>
-                <div class="col-span-2 flex items-center">
-                    <p class="font-medium">Email</p>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    <p class="font-medium"></p>
-                </div>
-
-            </div>
-                      
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        *
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nom complet
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Status
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Email
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
                 @foreach ($users as $user)
-                    
-                    <div class="grid grid-cols-8 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-                        <div class="col-span-1 flex items-center">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $loop->iteration }}</p>
-                        </div>
-                        <div class="col-span-3 flex items-center">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $user->name }}</p>
-                        </div>
-                        <div class="col-span-1 hidden items-center sm:flex">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $user->role->name }}</p>
-                        </div>
-                        <div class="col-span-2 flex items-center">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $user->email }}</p>
-                        </div>
-                        <div class="col-span-1 flex items-center">
-                            <a href="{{ route('users.edit', $user->id) }}" class="mr-3 text-meta-5">Editer</a>
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">
+                            {{ $loop->iteration }}
+                        </td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $user->name }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $user->role->name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $user->email }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="{{ route('users.edit', $user) }}" class="mr-3 text-blue-500 font-bold hover:underline">Editer</a>
+                            <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-danger">Supprimer</button>
+                                <button type="submit" class="text-red-500 font-bold hover:underline">Supprimer</button>
                             </form>
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
                 @endforeach
-
-            
-          </div>
-
-
-
+            </tbody>
+        </table>
     </div>
 
     <div>

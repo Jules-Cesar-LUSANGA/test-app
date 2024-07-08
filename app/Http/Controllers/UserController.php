@@ -67,7 +67,7 @@ class UserController extends Controller
 
         $user->update($request->validated());
 
-        return to_route('users.index');
+        return to_route('users.index')->with('success', "L'utilisateur a été modifié avec succès !");
     }
 
     /**

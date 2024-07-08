@@ -70,7 +70,7 @@ class QuestionController extends Controller
             'points'   => $request->input('points'),
         ]);
 
-        return to_route('exams.show', $question->exam);
+        return to_route('exams.show', $question->exam)->with('success', "La quesiton a été modifiée");
     }
 
     /**

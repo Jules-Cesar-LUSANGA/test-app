@@ -1,58 +1,61 @@
 <x-app-layout pageTitle="Evaluations" pageLinkText="Créer une évaluation" :pageLinkUrl="route('exams.create')">
 
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-3">
-        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div class="grid grid-cols-7 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">  
-                <div class="col-span-1 flex items-center">
-                    <p class="font-medium">*</p>
-                </div>
-                <div class="col-span-3 flex items-center">
-                    <p class="font-medium">Titre</p>
-                </div>
-                <div class="col-span-1 hidden items-center">
-                    <p class="font-medium">Duree</p>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    <p class="font-medium">Code</p>
-                </div>
-                <div class="col-span-1 flex items-center">
-                    <p class="font-medium"></p>
-                </div>
-
-            </div>
-                      
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        *
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Titre
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Code
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Duree
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Date
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
                 @foreach ($exams as $exam)
-                    
-                    <div class="grid grid-cols-8 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-                        <div class="col-span-1 flex items-center">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $loop->iteration }}</p>
-                        </div>
-                        <div class="col-span-3 flex items-center">
-                            <p class="text-sm font-medium text-black dark:text-white">
-                                <a href="{{ route('exams.show', $exam) }}" class="mr-3 text-meta-5">{{ $exam->course_name }}</a>
-                            </p>
-                        </div>
-                        <div class="col-span-1 hidden items-center sm:flex">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $exam->duration }} mins</p>
-                        </div>
-                        <div class="col-span-1 flex items-center">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $exam->code }}</p>
-                        </div>
-                        <div class="col-span-1 flex items-center">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">
+                            {{ $loop->iteration }}
+                        </td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <a href="{{ route('exams.show', $exam) }}" class="text-blue-500 font-bold hover:underline">{{ $exam->course_name }}</a>
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $exam->code }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $exam->duration }} m
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ Str::substr($exam->created_at, 0, 10) }}
+                        </td>
+                        <td class="px-6 py-4">
                             @notPresented($exam)
-                                <a href="{{ route('exams.edit', $exam->id) }}" class="mr-3 text-meta-5">Editer</a>
+                                <a href="{{ route('exams.edit', $exam->id) }}" class="mr-3 text-blue-500 font-bold hover:underline">Editer</a>
                                 <form action="{{ route('exams.destroy', $exam->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-danger">Supprimer</button>
+                                    <button type="submit" class="text-red-500 font-bold hover:underline">Supprimer</button>
                                 </form>
                             @endnotPresented
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
                 @endforeach
-
-          </div>
-
+            </tbody>
+        </table>
     </div>
-
+    
 </x-app-layout>

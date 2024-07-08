@@ -1,5 +1,5 @@
 @session('error')
-    <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)" class="flex mb-3 w-full border-l-6 border-[#F87171] bg-[#F87171] bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9">
+    <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)" class="flex mb-3 w-full border-l-6 border-[#F87171] bg-[#F87171] bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-opacity-30 md:p-9">
                     
         <div class="mr-5 flex h-9 w-full max-w-[36px] items-center justify-center rounded-lg bg-[#F87171]" >
         
@@ -17,7 +17,7 @@
         </div>
         
         <div class="w-full">
-            <h5 class="mb-3 font-bold text-[#B45454]">
+            <h5 class="mb-3 font-bold text-red-700">
                 Une erreur s'est produite
             </h5>
             <p class="leading-relaxed text-[#CD5D5D]">
@@ -29,7 +29,7 @@
 
 @session('success')
     
-    <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)" class="flex mb-3 w-full border-l-6 border-[#34D399] bg-[#34D399] bg-opacity-[15%] px-7 py-8 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-9">
+    <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)" class="flex mb-3 w-full border-l-6 border-[#34D399] bg-[#34D399] bg-opacity-[15%] px-5 py-6 shadow-md dark:bg-indigo-800 dark:bg-opacity-30 md:p-7">
         
         <div class="mr-5 flex h-9 w-full max-w-[36px] items-center justify-center rounded-lg bg-[#34D399]" >
             <svg
@@ -50,7 +50,7 @@
 
         <div class="w-full">
             <h5
-                class="mb-3 text-lg font-bold text-black dark:text-[#34D399]"
+                class="mb-3 text-lg font-bold text-black dark:text-emerald-700"
             >
                 Message de success
             </h5>

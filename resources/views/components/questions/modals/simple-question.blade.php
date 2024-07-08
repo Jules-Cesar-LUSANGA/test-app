@@ -34,13 +34,13 @@
         </div>
 
         <div class="mt-6 flex justify-end">
-            <x-secondary-button x-on:click="$dispatch('close')">
-                {{ __('Annuler') }}
-            </x-secondary-button>
-
-            <x-primary-button class="ms-3">
+            <x-primary-button>
                 {{ __('Ajouter') }}
             </x-primary-button>
+            
+            <x-danger-button class="ms-3" type="button" onclick="window.add_question.close();">
+                {{ __('Annuler') }}
+            </x-danger-button>            
         </div>
     </form>
 </x-modal>

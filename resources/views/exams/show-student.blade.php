@@ -30,7 +30,7 @@
                 @endforeach
             </div>
             
-            <x-primary-button>Soumettre</x-primary-button>
+            <x-primary-button class="bg-blue-800 rounded">Soumettre</x-primary-button>
             
         </form>
     </div>

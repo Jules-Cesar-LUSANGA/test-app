@@ -33,27 +33,27 @@
             </div>
         </div>
 
-        <div class="mt-6">
-            <h4>Assertions</h4>
+        <div class="mt-6 hidden" id="assertionsContainer">
+            <x-input-label value="{{ __('Assertions') }}" />
 
-            <ul id="assertions">
+            <ul id="assertions" class="mt-1">
                 
             </ul>
         </div>
 
-        <div class="mt-6 flex justify-end">
+        <div class="mt-6 flex justify-between">
             
-            <x-primary-button class="ms-3 hidden" type="button" id="addAssertion">
+            <x-secondary-button type="button" id="addAssertion" class="hidden">
                 {{ __('Ajouter une assertion') }}
-            </x-primary-button>
+            </x-secondary-button>
 
-            <x-primary-button class="ms-3 hidden" id="createQCM-Button">
+            <x-primary-button class="hidden mx-4" id="createQCM-Button">
                 {{ __('Ajouter la question') }}
             </x-primary-button>
 
-            <x-secondary-button class="ms-3" x-on:click="$dispatch('close')">
+            <x-danger-button type="button" onclick="window.add_qcm_question.close();">
                 {{ __('Annuler') }}
-            </x-secondary-button>
+            </x-danger-button>
 
         </div>
     </form>
@@ -71,8 +71,8 @@
 
         assertionInput.setAttribute('name', 'assertions[]');
         assertionInput.setAttribute('type', 'text');
-        assertionInput.setAttribute('placeholder', 'Type assertion content');
-        assertionInput.setAttribute('class', 'w-full rounded');
+        assertionInput.setAttribute('placeholder', 'Contenu de l\'assertion');
+        assertionInput.setAttribute('class', 'w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm');
 
         li.appendChild(assertionInput)
 
@@ -85,11 +85,15 @@
     contentQCM.addEventListener('keyup', function()
     {
         if (contentQCM.value.length > 5) {
+            document.getElementById('assertionsContainer').classList.remove('hidden')
             addAssertion.classList.remove('hidden')
-            document.getElementById('createQCM-Button').classList.remove('hidden');
         } else {
             addAssertion.classList.add('hidden')
             document.getElementById('createQCM-Button').classList.add('hidden');
         }
+    })
+
+    addAssertion.addEventListener('click', function(){
+        document.getElementById('createQCM-Button').classList.remove('hidden');
     })
 </script>

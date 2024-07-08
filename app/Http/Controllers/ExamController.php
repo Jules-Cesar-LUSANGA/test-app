@@ -66,7 +66,7 @@ class ExamController extends Controller
         $exam = Exam::where('code', $request->code)->first();
 
         if ($exam == null) {
-            return redirect()->back()->with('error', 'Evaluation code invalid');
+            return redirect()->back()->with('error', 'Le code est invalide');
         }
 
         // Check if user passed already this evaluation
@@ -101,7 +101,7 @@ class ExamController extends Controller
         $exam->update($request->validated());
 
         return redirect()->route('exams.show', compact('exam'))
-                        ->with('success', 'Exam updated successfully');
+                        ->with('success', 'Evaluation modifiée avec succès');
     }
 
     /**
@@ -113,7 +113,7 @@ class ExamController extends Controller
         $exam->delete();
 
         return redirect()->route('exams.index')
-                        ->with('success', 'Exam deleted successfully');
+                        ->with('success', 'Evaluation supprimée');
     }
 
     public function allowAnotherChance(Exam $exam)

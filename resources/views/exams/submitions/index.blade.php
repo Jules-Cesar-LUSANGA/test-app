@@ -1,45 +1,45 @@
-<x-app-layout pageTitle="Soumissions : {{ $exam->course_name }}">
+<x-app-layout pageTitle="Soumissions">
     
     <x-slot name="pageButton">
-        <form action="{{ route('exams.another-chance', $exam) }}" method="post">
+        <form action="{{ route('exams.another-chance', 1) }}" method="post">
             @csrf
             <x-primary-button>Refaire l'évaluation</x-primary-button>
         </form>
     </x-slot>
-    
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-3">
-        <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div class="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">  
-                <div class="col-span-1 flex items-center">
-                    <p class="font-medium">*</p>
-                </div>
-                <div class="col-span-3 flex items-center">
-                    <p class="font-medium">Nom de l'étudiant</p>
-                </div>
-                <div class="col-span-1 hidden items-center sm:flex">
-                    <p class="font-medium">Date</p>
-                </div>
-            </div>
-                      
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        *
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nom de l'étudiant
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Date
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
                 @foreach ($exam->presentations as $presentation)
-                    
-                    <div class="grid grid-cols-8 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-                        <div class="col-span-1 flex items-center">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $loop->iteration }}</p>
-                        </div>
-                        <div class="col-span-3 flex items-center">
-                            <p class="text-sm font-medium text-black dark:text-white">
-                                <a href="{{ route('exams.submittions.show', $presentation) }}" class="text-meta-5">{{ $presentation->user->name }}</a>
-                            </p>
-                        </div>
-                        <div class="col-span-1 hidden items-center sm:flex">
-                            <p class="text-sm font-medium text-black dark:text-white">{{ $presentation->updated_at }}</p>
-                        </div>
-                    </div>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="px-6 py-4">
+                            {{ $loop->iteration }}
+                        </td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <a href="{{ route('exams.submittions.show', $presentation) }}" class="text-blue-500 font-bold hover:underline">
+                                {{ $presentation->user->name }}
+                            </a>
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $presentation->updated_at }}
+                        </td>
+                    </tr>
                 @endforeach
-
-          </div>
-
+            </tbody>
+        </table>
     </div>
 
 </x-app-layout>

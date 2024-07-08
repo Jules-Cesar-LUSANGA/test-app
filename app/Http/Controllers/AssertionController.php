@@ -13,7 +13,8 @@ class AssertionController extends Controller
         $assertion->isAnswer = !$assertion->isAnswer;
         $assertion->save();
 
-        return back();
+        $successMessage = $assertion->isAnswer == True ? 'Assertion marquée comme bonne réponse !' : 'L\'assertion n\'est plus marquée comme bonne réponse !';
+        return back()->with('success', $successMessage);
     }
 
 }
