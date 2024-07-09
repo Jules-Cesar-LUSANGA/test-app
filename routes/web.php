@@ -24,29 +24,37 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::resource('exams', ExamController::class);
+    Route::middleware('role:2')->group(function(){
+        Route::resource('exams', ExamController::class);
+        Route::post('/exams/{exam}/another-chance', [ExamController::class, 'allowAnotherChance'])->name('exams.another-chance');
+
+        // Create questions resource
+        Route::resource('questions', QuestionController::class)->only(['edit','destroy', 'update']);
+        Route::post('/questions/{exam}/create', [QuestionController::class, 'store'])->name('questions.store');
+        Route::post('/questions/{exam}/createQCM', [QuestionController::class, 'storeQcm'])->name('questions.storeQcm');
+
+        Route::post('/assertion/{assertion}/setAnswer', [AssertionController::class, 'IsAnswer'])->name('assertion.IsAnswer');
+        Route::post('/submitions/{submition}/setPoints', [SubmitionController::class, 'setPoints'])->name('exams.submittions.set-points');
+    });
+    
     Route::post('/exams/show/with-code', [ExamController::class, 'showWithCode'])->name('exams.show-with-code');
-    Route::post('/exams/{exam}/another-chance', [ExamController::class, 'allowAnotherChance'])->name('exams.another-chance');
-
-    // Create questions resource
-    Route::resource('questions', QuestionController::class)->only(['edit','destroy', 'update']);
-    Route::post('/questions/{exam}/create', [QuestionController::class, 'store'])->name('questions.store');
-    Route::post('/questions/{exam}/createQCM', [QuestionController::class, 'storeQcm'])->name('questions.storeQcm');
-
-    Route::post('/assertion/{assertion}/setAnswer', [AssertionController::class, 'IsAnswer'])->name('assertion.IsAnswer');
 
     Route::post('/responses/{exam}/set', [ResponseController::class, 'set'])->name('exams.responses.set');
     Route::get('/submitions/{exam}/get', [SubmitionController::class, 'get'])->name('exams.submittions.get');
     Route::get('/submitions/{presentation}/show', [SubmitionController::class, 'show'])->name('exams.submittions.show');
-    Route::post('/submitions/{submition}/setPoints', [SubmitionController::class, 'setPoints'])->name('exams.submittions.set-points');
+    
 
-    Route::resource('presentations', PresentationController::class);
+    Route::resource('presentations', PresentationController::class)
+            ->only('index')
+            ->middleware('role:3');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('users', UserController::class)->except(['show']);
+    Route::resource('users', UserController::class)
+            ->except(['show'])
+            ->middleware('role:1');
 });
 
 require __DIR__.'/auth.php';
