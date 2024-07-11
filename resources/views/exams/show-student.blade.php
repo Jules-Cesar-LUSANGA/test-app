@@ -1,7 +1,7 @@
-<x-evaluation-layout :title="$exam->course_name" :code="$exam->code" :duration="$exam->duration" :description="$exam->description">
+<x-evaluation-layout :title="$exam->course_name" :code="$exam->code" :duration="$exam->duration" :timeLeft="$timeLeft" :description="$exam->description">
 
     <div class="py-6">
-        <form action="{{ route('exams.responses.set', $exam) }}" method="POST">
+        <form action="{{ route('exams.responses.set', $exam) }}" id="submitExam" method="POST">
             @csrf
             <h1 class="text-2xl font-semibold">Questions</h1>
 

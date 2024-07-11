@@ -12,6 +12,7 @@ class AppServiceProvider extends ServiceProvider
     const ADMIN_ROLE_ID = 1;
     const TEACHER_ROLE_ID = 2;
     const STUDENT_ROLE_ID = 3;
+    const SUPERVISOR_ROLE_ID = 4;
     /**
      * Register any application services.
      */
@@ -35,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::if('student', function(){
             return auth()->user()->role_id == self::STUDENT_ROLE_ID; 
+        });
+
+        Blade::if('supervisor', function(){
+            return auth()->user()->role_id == self::SUPERVISOR_ROLE_ID; 
         });
 
         // Verify if given question is qcm

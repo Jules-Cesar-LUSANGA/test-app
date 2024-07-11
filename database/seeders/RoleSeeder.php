@@ -13,7 +13,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::factory(3)->sequence(
+        Role::factory(4)->sequence(
                 [
                     'name'  => 'Administrateur'
                 ],
@@ -22,6 +22,9 @@ class RoleSeeder extends Seeder
                 ],
                 [
                     'name'  => 'Etudiant'
+                ],
+                [
+                    'name'  => 'Surveillant'
                 ]
             )->create();
     }

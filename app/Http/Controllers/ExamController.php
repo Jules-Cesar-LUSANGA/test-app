@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Class\EvaluationPresentation;
 use App\Http\Requests\Exam\CreateExamRequest;
+use App\Http\Requests\ShowExamRequest;
 use App\Models\Exam;
 use App\Models\Presentation;
+use Carbon\CarbonInterval;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,32 +59,38 @@ class ExamController extends Controller
         return view('exams.show', compact('exam'));
     }
 
-    public function showWithCode(Request $request)
+    public function showWithCode(ShowExamRequest $request)
     {
-        // Used when a student want to reply to an evaluation
-        $request->validate([
-            'code' => 'required'
-        ]);
+        // Vérication de l'existence de l'évaluation
+        $exam = $this->getExam($request);
 
-        $exam = Exam::where('code', $request->code)->first();
-
-        if ($exam == null) {
-            return redirect()->back()->with('error', 'Le code est invalide');
+        // Lever une erreur l'évaluation n'est pas encore lancée
+        if ($exam->end_at == null) {
+            return back()->with('error', "L'évaluation n'est pas encore lancée");
+        }
+        // Lever une erreur si le délai est déjà dépassé
+        $end_at = $exam->end_at;
+        if (now() > $end_at) {
+            return back()->with('error', "Le temps est déjà dépassé");
         }
 
-        // Check if user passed already this evaluation
-
+        // Vérifier et récupérer si l'étudiant a déjà présenté cette évaluation
         $presentation = EvaluationPresentation::userPassedEvaluation($exam);
-        abort_if($presentation->retake == false, 403);
+        // Lever une erreur si aucune autorisation de refaire n'a été donné
+        $this->checkIfHasAnotherChance($presentation);
 
-        // Set presented
+        // Marquer comme déjà présentée
         $presentation->update([
             'retake' => false,
         ]);
 
         [$exam, $questions] = $this->getExamAndQuestions($exam);
         
-        return view('exams.show-student', compact('exam', 'questions'));
+        // Récupérer le temps qui reste avant la fin de l'évaluation
+        $minutes = CarbonInterval::diff(now(), $end_at)->totalMinutes;
+        $timeLeft = (int)$minutes+1;
+
+        return view('exams.show-student', compact('exam', 'questions', 'timeLeft'));
     }
 
     /**
@@ -121,7 +130,8 @@ class ExamController extends Controller
         // Decrement exam attempts
         if ($exam->attempts > 0) {
             $exam->update([
-                'attempts' => $exam->attempts - 1
+                'attempts'  => $exam->attempts - 1,
+                'end_at'    => null,
             ]);
         } else {
             return back()->with('error', 'Le nombre de tentative restante est de 0');
@@ -129,7 +139,7 @@ class ExamController extends Controller
         
         $exam->presentations()->each(function($presentation){
             $presentation->update([
-                'retake'    => true
+                'retake'    => true,
             ]);
         });
 
@@ -163,5 +173,38 @@ class ExamController extends Controller
         }
 
         return $code;
+    }
+
+    // Lancer une évaluation
+    public function launch(ShowExamRequest $request)
+    {
+        $exam = $this->getExam($request);
+
+        $exam_duration = $exam->duration;
+        $end_at = now()->addMinutes($exam_duration);
+
+        $exam->update([
+            'end_at' => $end_at
+        ]);
+
+        return back()->with('success', "L'évaluation a été lancée !");
+    }
+
+    public function getExam(ShowExamRequest $request) : Exam | RedirectResponse
+    {
+        $exam = Exam::where('code', $request->code)->first();
+
+        if ($exam == null) {
+            return abort(404);
+        }
+
+        return $exam;
+    }
+
+    public function checkIfHasAnotherChance(Presentation $presentation)
+    {
+        if ($presentation->retake == false) {
+            return abort(403,  "Vous avez déjà présenté cette évaluation !");
+        }
     }
 }

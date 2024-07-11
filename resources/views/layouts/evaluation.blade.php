@@ -2,6 +2,7 @@
     'title',
     'code',
     'duration',
+    'timeLeft',
     'description'
 ])
 <!DOCTYPE html>
@@ -29,6 +30,9 @@
                 <h1 class="text-2xl">{!! $title !!}</h1>
                 <p>Code : {{ $code }}</p>
                 <p>Durée : {{ $duration }} mins</p>
+                <p>
+                    Temps restant : <span id="minutes"></span> minutes
+                </p>
                 <p class="font-normal mb-3">
                     {!! $description !!}
                 </p>
@@ -40,5 +44,20 @@
             {{ $slot }}
         </main>
     </div>
+
+    <script>
+        // Récupérer la variable php $timeLeft
+        let minutes = {{ $timeLeft }};
+        
+        let interval = setInterval(() => {
+            if (minutes <= 0) {
+                clearInterval(interval);
+                document.querySelector('#submitExam').submit();
+            }
+            document.getElementById('minutes').textContent = minutes < 10 ? `0${minutes}` : minutes;
+            minutes--;
+        },60000);
+        
+    </script>
 </body>
 </html>

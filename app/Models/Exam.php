@@ -16,6 +16,7 @@ class Exam extends Model
         'attempts',
         'duration',
         'code',
+        'end_at',
     ];
 
     public function questions()

@@ -8,7 +8,19 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\SubmitionController;
 use App\Http\Controllers\UserController;
+use App\Models\Exam;
+use Carbon\CarbonInterval;
 use Illuminate\Support\Facades\Route;
+
+Route::get('temps/{exam}', function(Exam $exam){
+    $end_at = $exam->end_at;
+
+    if (now() > $end_at) {
+        dd("dépassé");
+    }
+    $minutes = CarbonInterval::diff(now(), $end_at)->totalMinutes;
+    dd((int)$minutes+1);
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +46,7 @@ Route::middleware('auth')->group(function () {
     });
     
     Route::post('/exams/show/with-code', [ExamController::class, 'showWithCode'])->name('exams.show-with-code');
+    Route::post('/exams/show/launch', [ExamController::class, 'launch'])->name('exams.launch');
 
     Route::post('/responses/{exam}/set', [ResponseController::class, 'set'])->name('exams.responses.set');
     Route::get('/submitions/{exam}/get', [SubmitionController::class, 'get'])->name('exams.submittions.get');
