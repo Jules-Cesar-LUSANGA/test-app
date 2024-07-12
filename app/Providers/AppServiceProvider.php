@@ -47,9 +47,17 @@ class AppServiceProvider extends ServiceProvider
             return $question->qcm == true;
         });
 
-        // Verify if given question is qcm
+        // Verify if given exam is not presented
         Blade::if('notPresented', function(Exam $exam){
             if ($exam->presentations()->count() == 0) {
+                return true;
+            }
+            return false;
+        });
+
+        // Verify if given question is not launched
+        Blade::if('notLaunched', function(Exam $exam){
+            if ($exam->end_at == null) {
                 return true;
             }
             return false;

@@ -50,6 +50,8 @@
                                     @method('DELETE')
                                     <button type="submit" class="text-red-500 font-bold hover:underline">Supprimer</button>
                                 </form>
+                            @else
+                                <a href="{{ route('exams.submittions.get', $exam->id) }}" class="mr-3 text-blue-500 font-bold hover:underline">Soumissions</a>
                             @endnotPresented
                         </td>
                     </tr>

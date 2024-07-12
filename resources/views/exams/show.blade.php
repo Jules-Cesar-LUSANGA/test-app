@@ -17,27 +17,34 @@
         @teacher()
             <div class="mt-4 flex items-center justify-end">
                 
-                @notPresented($exam)
-                    <div>
-                        
-                        <x-primary-button 
-                            onclick="window.add_qcm_question.showModal();"
-                            class="md:mx-2 mb-3"
-                        >
-                            Ajouter une question QCM
-                        </x-primary-button>
+                @notLaunched($exam)
+                    <form action="{{ route('exams.launch') }}" method="post" class="flex">
+                        @csrf
+                        <input type="hidden" name="code" value="{{ $exam->code }}">
+                        <x-secondary-button type="submit" class="md:mx-2 mb-3">Lancer</x-secondary-button>
+                    </form>
 
-                        <x-primary-button
-                            x-data=""
-                            onclick="window.add_question.showModal();"
-                        >
-                            Ajouter une simple question
-                        </x-primary-button>
+                    @notPresented($exam)
+                        <div>
+                            <x-primary-button 
+                                onclick="window.add_qcm_question.showModal();"
+                                class="md:mx-2 mb-3"
+                            >
+                                Ajouter une question QCM
+                            </x-primary-button>
 
-                    </div>
+                            <x-primary-button
+                                class="md:mx-2 mb-3"
+                                onclick="window.add_question.showModal();"
+                            >
+                                Ajouter une simple question
+                            </x-primary-button>
+
+                        </div>
+                    @endnotPresented
                 @else
                     <x-primary-link href="{{ route('exams.submittions.get', $exam) }}">Soumissions</x-primary-link>
-                @endnotPresented
+                @endnotLaunched
 
             </div>
 
@@ -63,7 +70,7 @@
                                     <div class="pl-0 px-4">
                                         <div class="lg:flex items-center">
                                             <h2 class="text-lg font-semibold">{{ "{$loop->iteration}.  {$question->content} ({$question->points} pts)" }}</h2>
-                                            @notPresented($exam)
+                                            @notLaunched($exam)
                                             <div class="flex items-center lg:ml-4">
                                                 <a href="{{ route('questions.edit', $question) }}" class="text-blue-500 font-bold hover:underline mr-4">Modifier</a>
                                                 <form action="{{ route('questions.destroy', $question) }}" method="POST">
@@ -72,24 +79,24 @@
                                                     <button type="submit" class="text-red-500 font-bold hover:underline">Supprimer</button>
                                                 </form>
                                             </div>
-                                            @endnotPresented
+                                            @endnotLaunched
                                         </div>
                                         <div class="mt-2">
                                             @if ($question->qcm == true)
                                                 <ul class="pl-4">
                                                     @foreach ($question->assertions as $assertion)
                                                         <li class="flex items-center mt-1">
-                                                            @notPresented($exam)
-                                                            <form action="{{ route('assertion.IsAnswer', $assertion) }}" method="post" id="assertionForm">
-                                                                @csrf
-                                                                <input 
-                                                                    @checked($assertion->isAnswer == true)
-                                                                    type="checkbox" 
-                                                                    class="mr-3" 
-                                                                    id="assertion{{ $loop->iteration }}" 
-                                                                    onchange="this.closest('form').submit();" />
-                                                            </form>
-                                                            @endnotPresented
+                                                            @notLaunched($exam)
+                                                                <form action="{{ route('assertion.IsAnswer', $assertion) }}" method="post" id="assertionForm">
+                                                                    @csrf
+                                                                    <input 
+                                                                        @checked($assertion->isAnswer == true)
+                                                                        type="checkbox" 
+                                                                        class="mr-3" 
+                                                                        id="assertion{{ $loop->iteration }}" 
+                                                                        onchange="this.closest('form').submit();" />
+                                                                </form>
+                                                            @endnotLaunched
                                                             <x-input-label for="assertion{{ $loop->iteration }}" @class(['text-blue-500' => $assertion->isAnswer == true])>{{ $assertion->content }}</x-input-label>
                                                         </li>
                                                     @endforeach

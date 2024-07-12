@@ -180,6 +180,11 @@ class ExamController extends Controller
     {
         $exam = $this->getExam($request);
 
+        // Vérifier qu'il reste des tentatives
+        if ($exam->attempts < 1) {
+            return back()->with('error', "Aucune tentative restante !");
+        }
+        
         $exam_duration = $exam->duration;
         $end_at = now()->addMinutes($exam_duration);
 
