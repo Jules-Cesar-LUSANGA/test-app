@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssertionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProfileController;
@@ -8,29 +9,19 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\SubmitionController;
 use App\Http\Controllers\UserController;
-use App\Models\Exam;
-use Carbon\CarbonInterval;
 use Illuminate\Support\Facades\Route;
-
-Route::get('temps/{exam}', function(Exam $exam){
-    $end_at = $exam->end_at;
-
-    if (now() > $end_at) {
-        dd("dépassé");
-    }
-    $minutes = CarbonInterval::diff(now(), $end_at)->totalMinutes;
-    dd((int)$minutes+1);
-});
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+
+    Route::prefix('dashboard')->group(function(){
+        Route::controller(DashboardController::class)->group(function(){
+            Route::get('/', 'index')->name('dashboard');
+        });
+    });
 
     Route::middleware('role:2')->group(function(){
         Route::resource('exams', ExamController::class);
