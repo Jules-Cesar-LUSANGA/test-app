@@ -8,7 +8,7 @@
             {{ __('Ajouter une question à choix multiples') }}
         </h2>
 
-        <div class="mt-3 grid grid-cols-2 gap-4">
+        <div class="mt-3 w-full grid grid-cols-2 gap-4">
             <div>
                 <x-input-label for="contentQCM" value="{{ __('Question') }}" />
                 <x-text-input

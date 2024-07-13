@@ -13,7 +13,7 @@
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
     
-            <div class="flex mb-3">
+            <div class="block md:flex mb-3">
                 <!-- Email Address -->
                 <div class="w-full mr-4">
                     <x-input-label for="email" :value="__('Email')" />
@@ -21,7 +21,7 @@
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
                 <!-- Status -->
-                <div class="w-full ml-4">
+                <div class="w-full ml-0 md:ml-4">
                     <x-input-label for="role_id" :value="__('Status')" />
                 
                     <x-input-select name="role_id" id="role_id" >

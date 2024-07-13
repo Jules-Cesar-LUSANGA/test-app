@@ -41,8 +41,8 @@
 
         @isset($pageTitle)
                             
-            <h1 class="flex justify-between items-center font-bold text-2xl mb-3">
-                <p>{!! $pageTitle !!}</p>
+            <h1 class="block sm:flex justify-between items-center font-bold text-2xl mb-3">
+                <p class="mb-3 sm:mb-0">{!! $pageTitle !!}</p>
                 
                 @if ($pageLinkText != null)
                     <x-primary-link href="{{ $pageLinkUrl }}">

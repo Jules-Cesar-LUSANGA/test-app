@@ -33,7 +33,7 @@
                     {{ __('Enregistrer') }}
                 </x-primary-button>
 
-                <x-danger-link class="ms-3" href="{{ route('exams.index') }}">
+                <x-danger-link class="mt-2 md:mt-0" href="{{ route('exams.index') }}">
                     {{ __('Annuler') }}
                 </x-danger-link>
             </div>

@@ -7,8 +7,8 @@
                 
                 <h2 class="font-bold mb-3 text-lg">Modifier cette question</h2>
 
-                <div class="flex justify-between mb-3">
-                    <div class="w-full mr-3">
+                <div class="block md:flex justify-between mb-3">
+                    <div class="w-full mr-3 mb-3 md:mb-0">
                         <x-input-label for="content" :value="__('Contenu de la question')" />
                         <x-text-input id="content" class="block mt-1 w-full" type="text" name="content" :value="old('content', $question->content)" required autofocus autocomplete="content" />
                         <x-input-error :messages="$errors->get('content')" class="mt-2" />

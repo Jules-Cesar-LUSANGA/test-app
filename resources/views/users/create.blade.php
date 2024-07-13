@@ -6,7 +6,7 @@
 
             <h2 class="font-bold text-lg mb-3">Ajouter un nouvel utilisateur</h2>
 
-            <div class="flex">
+            <div class="block md:flex">
                 <!-- Name -->
                 <div class="w-full mr-4 mt-4">
                     <x-input-label for="name" :value="__('Nom complet')" />
@@ -14,14 +14,14 @@
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
                 <!-- Email Address -->
-                <div class="w-full  ml-4 mt-4">
+                <div class="w-full  md:ml-4 mt-4">
                     <x-input-label for="email" :value="__('Email')" />
                     <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
             </div>
 
-            <div class="flex">
+            <div class="block md:flex">
                 <!-- Status -->
                 <div class="w-full mr-4 mt-4">
                     <x-input-label for="role_id" :value="__('Status')" />
@@ -34,7 +34,7 @@
                     <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
                 </div>
                 <!-- Password -->
-                <div class="w-full ml-4 mt-4">
+                <div class="w-full md:ml-4 mt-4">
                     <x-input-label for="password" :value="__('Password')" />
                     <x-text-input id="password" class="block mt-1 w-full"
                                     type="password"

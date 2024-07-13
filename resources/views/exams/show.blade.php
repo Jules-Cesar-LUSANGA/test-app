@@ -15,7 +15,7 @@
 
         
         @teacher()
-            <div class="mt-4 flex items-center justify-end">
+            <div class="mt-4 block md:flex items-center justify-end">
                 
                 @notLaunched($exam)
                     <form action="{{ route('exams.launch') }}" method="post" class="flex">
@@ -25,7 +25,7 @@
                     </form>
 
                     @notPresented($exam)
-                        <div>
+                        <div class="blocsk md:flex">
                             <x-primary-button 
                                 onclick="window.add_qcm_question.showModal();"
                                 class="md:mx-2 mb-3"
