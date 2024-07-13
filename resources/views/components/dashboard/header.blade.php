@@ -9,7 +9,7 @@
               </svg>
           </button>
           <a href="{{ url('/') }}" class="flex ms-2 md:me-24">
-            <img src="{{ asset('assets/logo.svg') }}" class="h-8 me-3 rounded-full" alt="TestApp Logo" />
+            <img src="{{ asset('assets/favicon.png') }}" class="h-8 me-3" alt="TestApp Logo" />
             <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{{ Config::get('app.name') }}</span>
           </a>
       </div>

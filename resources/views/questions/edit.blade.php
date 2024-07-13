@@ -1,10 +1,12 @@
-<x-app-layout pageTitle="Modifier la question : {{ $question->content }}">
+<x-app-layout>
     <div class="flex justify-center">
         <div class="bg-white rounded shadow-lg p-6">
             <form action="{{ route('questions.update', $question) }}" method="post">
                 @csrf
                 @method('PUT')
-        
+                
+                <h2 class="font-bold mb-3 text-lg">Modifier cette question</h2>
+
                 <div class="flex justify-between mb-3">
                     <div class="w-full mr-3">
                         <x-input-label for="content" :value="__('Contenu de la question')" />

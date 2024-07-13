@@ -21,7 +21,7 @@ class ExamController extends Controller
     public function index()
     {
         // Get all user exams
-        $exams = auth()->user()->exams()->orderByDesc('created_at')->get();
+        $exams = auth()->user()->exams()->orderByDesc('created_at')->paginate(10);
 
         return view('exams.index', compact('exams'));
     }

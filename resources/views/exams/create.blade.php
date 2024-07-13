@@ -1,8 +1,11 @@
-<x-app-layout pageTitle="Créer une évaluation">
+<x-app-layout>
     
     <div class="flex justify-center">
         <form action="{{ route('exams.store') }}" method="post" class="w-full sm:max-w-md mt-2 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             @csrf
+
+            <h2 class="font-bold text-lg mb-3">Créer une nouvelle évaluation</h2>
+            
             <div>
                 <x-input-label for="course_name" :value="__('Titre')" />
                 <x-text-input id="course_name" class="block mt-1 w-full" type="text" name="course_name" :value="old('course_name')" required autofocus autocomplete="course_name" />
@@ -16,7 +19,7 @@
                 </div>
                 <div class="w-full ml-2">
                     <x-input-label for="duration" :value="__('Durée')" />
-                    <x-text-input id="duration" class="block mt-1 w-full" type="number" min="0" name="duration" :value="old('duration')" min="1" required autofocus autocomplete="duration" />
+                    <x-text-input id="duration" class="block mt-1 w-full" type="number" min="0" name="duration" :value="old('duration', 1)" min="1" required autofocus autocomplete="duration" />
                     <x-input-error :messages="$errors->get('duration')" class="mt-2" />
                 </div>
             </div>

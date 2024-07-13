@@ -4,11 +4,11 @@
     <form method="post" action="{{ route('questions.store', $exam) }}" class="p-6">
         @csrf
 
-        <h2 class="text-lg font-medium text-gray-900">
+        <h2 class="text-lg font-bold text-gray-900">
             {{ __('Ajouter une question simple') }}
         </h2>
 
-        <div class="mt-6 grid grid-cols-2 gap-4">
+        <div class="mt-3 grid grid-cols-2 gap-4">
             <div>
                 <x-input-label for="content" value="{{ __('Question') }}" />
                 <x-text-input

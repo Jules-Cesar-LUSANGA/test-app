@@ -13,6 +13,17 @@
     <title>{{ Config::get('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" href="favicon.ico">
+    <style>
+        @font-face {
+            font-family: 'Montserrat';
+            src : url("{{ asset('assets/fonts/Montserrat-VariableFont_wght.ttf') }}") format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            font-family: Montserrat, sans-serif;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -30,8 +41,8 @@
 
         @isset($pageTitle)
                             
-            <h2 class="flex justify-between items-center font-bold text-2xl mb-3">
-                <p class="text-title-md2">{!! $pageTitle !!}</p>
+            <h1 class="flex justify-between items-center font-bold text-2xl mb-3">
+                <p>{!! $pageTitle !!}</p>
                 
                 @if ($pageLinkText != null)
                     <x-primary-link href="{{ $pageLinkUrl }}">
@@ -42,7 +53,7 @@
                         {{ $pageButton }}
                     @endisset
                 @endif
-            </h2>
+            </h1>
 
         @endisset
 

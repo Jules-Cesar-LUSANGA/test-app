@@ -4,7 +4,7 @@
     @endphp
 @else
     @php
-        $pageTitle = "Réponses"
+        $pageTitle = null
     @endphp
 @endteacher
 
@@ -33,7 +33,7 @@
                     <div>
                         <form action="{{ route('exams.submittions.set-points', $submition) }}" method="POST">
                             @csrf
-                            <h1 class="text-2xl font-semibold">Reponses</h1>
+                            <h1 class="text-2xl font-semibold">Reponses tentative N°{{ $loop->iteration }}</h1>
 
                             <div class="my-4">
                                 

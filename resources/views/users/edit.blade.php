@@ -1,9 +1,11 @@
-<x-app-layout pageTitle="Ajouter un utilisateur">
+<x-app-layout>
     <div class="flex justify-center">
         <form method="POST" action="{{ route('users.update', $user) }}" class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             @csrf
             @method('PUT')
             
+            <h2 class="font-bold text-lg mb-3">Modifier les informations</h2>
+
             <!-- Name -->
             <div class="mb-3">
                 <x-input-label for="name" :value="__('Nom complet')" />
@@ -31,7 +33,7 @@
                 </div>
             </div>
                 
-            <x-primary-button class="ms-4">
+            <x-primary-button>
                 {{ __('Enregistrer') }}
             </x-primary-button>
         </form>

@@ -31,7 +31,7 @@
                 <p>Code : {{ $code }}</p>
                 <p>Durée : {{ $duration }} mins</p>
                 <p>
-                    Temps restant : <span id="minutes"></span> minutes
+                    Temps restant : <span id="minutes">{{ $timeLeft }}</span> minutes
                 </p>
                 <p class="font-normal mb-3">
                     {!! $description !!}

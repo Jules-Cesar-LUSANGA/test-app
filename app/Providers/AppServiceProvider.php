@@ -63,6 +63,13 @@ class AppServiceProvider extends ServiceProvider
             return false;
         });
 
+        Blade::if('null', function($collection){
+            if ($collection->first() == null) {
+                return true;
+            }
+            return false;
+        });
+
 
         Model::preventLazyLoading(!$this->app->isProduction());
     }

@@ -1,9 +1,11 @@
-<x-app-layout pageTitle="Ajouter un utilisateur">
+<x-app-layout>
     
-    <div class="flex justify-center">
+    <div class="flex justify-center items-center">
         <form method="POST" action="{{ route('users.store') }}" class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             @csrf
-    
+
+            <h2 class="font-bold text-lg mb-3">Ajouter un nouvel utilisateur</h2>
+
             <div class="flex">
                 <!-- Name -->
                 <div class="w-full mr-4 mt-4">
